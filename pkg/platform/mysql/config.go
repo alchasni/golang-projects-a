@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"twatter/pkg/consts"
+	"golang-projects-a/pkg/consts"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

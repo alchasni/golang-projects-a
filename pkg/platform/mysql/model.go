@@ -1,6 +1,6 @@
 package mysql
 
-import "twatter/pkg/types"
+import "golang-projects-a/pkg/types"
 
 type Role struct {
 	ID   uint32     `gorm:"primaryKey"`

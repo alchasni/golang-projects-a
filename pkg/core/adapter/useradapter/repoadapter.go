@@ -1,12 +1,12 @@
-//go:generate mockgen -destination=../../../mocks/adapter/useradapter/repoadapter.go github.com/adityarev/go-be-starter-2/pkg/core/adapter/useradapter RepoAdapter
+//go:generate mockgen -destination=../../../mocks/adapter/useradapter/repoadapter.go github.com/alchasni/golang-projects-a/pkg/core/adapter/useradapter RepoAdapter
 
 package useradapter
 
 import (
 	"context"
 
-	"twatter/pkg/core/domain"
-	"twatter/pkg/types"
+	"golang-projects-a/pkg/core/domain"
+	"golang-projects-a/pkg/types"
 )
 
 type RepoAdapter interface {

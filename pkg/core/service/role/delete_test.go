@@ -4,10 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"twatter/pkg/core/adapter"
-	"twatter/pkg/core/service"
-	mock_roleadapter "twatter/pkg/mocks/adapter/roleadapter"
-	"twatter/pkg/platform/validator"
+	"golang-projects-a/pkg/core/adapter"
+	"golang-projects-a/pkg/core/service"
+	mock_roleadapter "golang-projects-a/pkg/mocks/adapter/roleadapter"
+	"golang-projects-a/pkg/platform/validator"
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"

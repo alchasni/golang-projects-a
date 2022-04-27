@@ -4,12 +4,12 @@ import (
 	"context"
 	"errors"
 
-	"twatter/pkg/consts"
-	"twatter/pkg/core/adapter"
-	"twatter/pkg/core/adapter/permissionadapter"
-	"twatter/pkg/core/adapter/validatoradapter"
-	"twatter/pkg/core/service"
-	"twatter/pkg/types"
+	"golang-projects-a/pkg/consts"
+	"golang-projects-a/pkg/core/adapter"
+	"golang-projects-a/pkg/core/adapter/permissionadapter"
+	"golang-projects-a/pkg/core/adapter/validatoradapter"
+	"golang-projects-a/pkg/core/service"
+	"golang-projects-a/pkg/types"
 )
 
 type CreateReq struct {

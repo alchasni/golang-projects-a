@@ -3,12 +3,12 @@ package permission
 import (
 	"context"
 
-	"twatter/pkg/consts"
-	"twatter/pkg/core/adapter/permissionadapter"
-	"twatter/pkg/core/adapter/validatoradapter"
-	"twatter/pkg/core/domain"
-	"twatter/pkg/core/service"
-	"twatter/pkg/types"
+	"golang-projects-a/pkg/consts"
+	"golang-projects-a/pkg/core/adapter/permissionadapter"
+	"golang-projects-a/pkg/core/adapter/validatoradapter"
+	"golang-projects-a/pkg/core/domain"
+	"golang-projects-a/pkg/core/service"
+	"golang-projects-a/pkg/types"
 )
 
 type GetListReq struct {

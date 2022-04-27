@@ -1,8 +1,8 @@
 package yaml
 
 import (
-	"twatter/pkg/platform/mysql"
-	"twatter/pkg/transport/http"
+	"golang-projects-a/pkg/platform/mysql"
+	"golang-projects-a/pkg/transport/http"
 )
 
 type Config struct {

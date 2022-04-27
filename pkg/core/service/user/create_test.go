@@ -6,11 +6,11 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"twatter/pkg/consts"
-	"twatter/pkg/core/adapter/useradapter"
-	"twatter/pkg/core/domain"
-	mock_useradapter "twatter/pkg/mocks/adapter/useradapter"
-	"twatter/pkg/platform/validator"
+	"golang-projects-a/pkg/consts"
+	"golang-projects-a/pkg/core/adapter/useradapter"
+	"golang-projects-a/pkg/core/domain"
+	mock_useradapter "golang-projects-a/pkg/mocks/adapter/useradapter"
+	"golang-projects-a/pkg/platform/validator"
 
 	"github.com/golang/mock/gomock"
 )

@@ -3,7 +3,7 @@ package domain
 import (
 	"time"
 
-	"twatter/pkg/types"
+	"golang-projects-a/pkg/types"
 )
 
 type User struct {

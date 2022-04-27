@@ -1,4 +1,4 @@
-//go:generate mockgen -destination=../../../mocks/adapter/validatoradapter/adapter.go github.com/adityarev/go-be-starter-2/pkg/core/adapter/validatoradapter Adapter
+//go:generate mockgen -destination=../../../mocks/adapter/validatoradapter/adapter.go github.com/alchasni/golang-projects-a/pkg/core/adapter/validatoradapter Adapter
 
 package validatoradapter
 

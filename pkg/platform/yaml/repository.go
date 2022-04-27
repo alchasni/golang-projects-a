@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"twatter/pkg/core/adapter/validatoradapter"
+	"golang-projects-a/pkg/core/adapter/validatoradapter"
 
 	"gopkg.in/yaml.v3"
 )

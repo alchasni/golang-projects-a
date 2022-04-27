@@ -10,10 +10,10 @@ import (
 	"os/signal"
 	"time"
 
-	"twatter/pkg/core/service/permission"
-	"twatter/pkg/core/service/role"
-	"twatter/pkg/core/service/rolepermission"
-	"twatter/pkg/transport/http/middleware"
+	"golang-projects-a/pkg/core/service/permission"
+	"golang-projects-a/pkg/core/service/role"
+	"golang-projects-a/pkg/core/service/rolepermission"
+	"golang-projects-a/pkg/transport/http/middleware"
 
 	"github.com/labstack/echo/v4"
 	echomiddleware "github.com/labstack/echo/v4/middleware"

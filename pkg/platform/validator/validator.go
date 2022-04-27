@@ -3,8 +3,8 @@ package validator
 import (
 	"fmt"
 
-	"twatter/pkg/core/adapter"
-	"twatter/pkg/core/adapter/validatoradapter"
+	"golang-projects-a/pkg/core/adapter"
+	"golang-projects-a/pkg/core/adapter/validatoradapter"
 
 	"github.com/go-playground/validator/v10"
 )

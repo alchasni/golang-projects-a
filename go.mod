@@ -1,4 +1,4 @@
-module twatter
+module golang-projects-a
 
 go 1.17
 

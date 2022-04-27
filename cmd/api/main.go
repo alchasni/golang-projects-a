@@ -4,13 +4,13 @@ import (
 	"flag"
 	"fmt"
 
-	"twatter/pkg/core/service/permission"
-	"twatter/pkg/core/service/role"
-	"twatter/pkg/core/service/rolepermission"
-	"twatter/pkg/platform/mysql"
-	"twatter/pkg/platform/validator"
-	"twatter/pkg/platform/yaml"
-	"twatter/pkg/transport/http"
+	"golang-projects-a/pkg/core/service/permission"
+	"golang-projects-a/pkg/core/service/role"
+	"golang-projects-a/pkg/core/service/rolepermission"
+	"golang-projects-a/pkg/platform/mysql"
+	"golang-projects-a/pkg/platform/validator"
+	"golang-projects-a/pkg/platform/yaml"
+	"golang-projects-a/pkg/transport/http"
 )
 
 func main() {

@@ -1,8 +1,8 @@
 package rolepermission
 
 import (
-	"twatter/pkg/core/adapter/rolepermissionadapter"
-	"twatter/pkg/core/adapter/validatoradapter"
+	"golang-projects-a/pkg/core/adapter/rolepermissionadapter"
+	"golang-projects-a/pkg/core/adapter/validatoradapter"
 )
 
 type UseCase interface {

@@ -3,7 +3,7 @@ package http
 import (
 	"net/http"
 
-	"twatter/pkg/transport/http/middleware"
+	"golang-projects-a/pkg/transport/http/middleware"
 
 	"github.com/labstack/echo/v4"
 )

@@ -1,6 +1,6 @@
 package domain
 
-import "twatter/pkg/types"
+import "golang-projects-a/pkg/types"
 
 type Permission struct {
 	ID         uint32

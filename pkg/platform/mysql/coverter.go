@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	"twatter/pkg/core/domain"
+	"golang-projects-a/pkg/core/domain"
 )
 
 func (p Permission) load(perm domain.Permission) Permission {

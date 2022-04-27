@@ -3,10 +3,10 @@ package mysql
 import (
 	"context"
 
+	"golang-projects-a/pkg/core/adapter"
+	"golang-projects-a/pkg/core/adapter/permissionadapter"
+	"golang-projects-a/pkg/core/domain"
 	"golang.org/x/sync/errgroup"
-	"twatter/pkg/core/adapter"
-	"twatter/pkg/core/adapter/permissionadapter"
-	"twatter/pkg/core/domain"
 
 	"gorm.io/gorm"
 )

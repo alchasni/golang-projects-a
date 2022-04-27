@@ -3,9 +3,9 @@ package permission
 import (
 	"context"
 
-	"twatter/pkg/core/adapter/permissionadapter"
-	"twatter/pkg/core/adapter/validatoradapter"
-	"twatter/pkg/core/service"
+	"golang-projects-a/pkg/core/adapter/permissionadapter"
+	"golang-projects-a/pkg/core/adapter/validatoradapter"
+	"golang-projects-a/pkg/core/service"
 )
 
 type UseCase interface {

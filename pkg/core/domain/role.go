@@ -3,7 +3,7 @@ package domain
 import (
 	"reflect"
 
-	"twatter/pkg/types"
+	"golang-projects-a/pkg/types"
 )
 
 type Role struct {

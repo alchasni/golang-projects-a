@@ -1,12 +1,12 @@
-//go:generate mockgen -destination=../../../mocks/adapter/permissionadapter/repoadapter.go github.com/adityarev/go-be-starter-2/pkg/core/adapter/permissionadapter RepoAdapter
+//go:generate mockgen -destination=../../../mocks/adapter/permissionadapter/repoadapter.go github.com/alchasni/golang-projects-a/pkg/core/adapter/permissionadapter RepoAdapter
 
 package permissionadapter
 
 import (
 	"context"
 
-	"twatter/pkg/core/domain"
-	"twatter/pkg/types"
+	"golang-projects-a/pkg/core/domain"
+	"golang-projects-a/pkg/types"
 )
 
 type RepoAdapter interface {

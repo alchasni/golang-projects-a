@@ -3,9 +3,9 @@ package auth
 import (
 	"context"
 
-	"twatter/pkg/core/adapter/useradapter"
-	"twatter/pkg/core/adapter/validatoradapter"
-	"twatter/pkg/core/service"
+	"golang-projects-a/pkg/core/adapter/useradapter"
+	"golang-projects-a/pkg/core/adapter/validatoradapter"
+	"golang-projects-a/pkg/core/service"
 )
 
 type UseCase interface {

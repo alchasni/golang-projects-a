@@ -3,9 +3,9 @@ package role
 import (
 	"context"
 
-	"twatter/pkg/core/adapter/roleadapter"
-	"twatter/pkg/core/adapter/validatoradapter"
-	"twatter/pkg/core/service"
+	"golang-projects-a/pkg/core/adapter/roleadapter"
+	"golang-projects-a/pkg/core/adapter/validatoradapter"
+	"golang-projects-a/pkg/core/service"
 )
 
 type UseCase interface {

@@ -3,8 +3,8 @@ package mysql
 import (
 	"context"
 
-	"twatter/pkg/core/adapter/rolepermissionadapter"
-	"twatter/pkg/types"
+	"golang-projects-a/pkg/core/adapter/rolepermissionadapter"
+	"golang-projects-a/pkg/types"
 
 	"gorm.io/gorm"
 )

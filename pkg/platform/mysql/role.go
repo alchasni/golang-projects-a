@@ -3,9 +3,9 @@ package mysql
 import (
 	"context"
 
-	"twatter/pkg/core/adapter"
-	"twatter/pkg/core/adapter/roleadapter"
-	"twatter/pkg/core/domain"
+	"golang-projects-a/pkg/core/adapter"
+	"golang-projects-a/pkg/core/adapter/roleadapter"
+	"golang-projects-a/pkg/core/domain"
 
 	"golang.org/x/sync/errgroup"
 	"gorm.io/gorm"

@@ -1,6 +1,6 @@
 package consts
 
-import "twatter/pkg/types"
+import "golang-projects-a/pkg/types"
 
 const (
 	PermissionCode_PermisisonRead types.Code = "permission.read"

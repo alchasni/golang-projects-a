@@ -3,10 +3,10 @@ package http
 import (
 	"net/http"
 
-	"twatter/pkg/core/service"
-	"twatter/pkg/core/service/permission"
-	"twatter/pkg/transport/http/middleware"
-	"twatter/pkg/types"
+	"golang-projects-a/pkg/core/service"
+	"golang-projects-a/pkg/core/service/permission"
+	"golang-projects-a/pkg/transport/http/middleware"
+	"golang-projects-a/pkg/types"
 
 	"github.com/labstack/echo/v4"
 )

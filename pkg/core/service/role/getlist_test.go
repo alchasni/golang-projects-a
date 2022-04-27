@@ -5,14 +5,14 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"twatter/pkg/consts"
-	"twatter/pkg/core/adapter"
-	"twatter/pkg/core/adapter/roleadapter"
-	"twatter/pkg/core/domain"
-	"twatter/pkg/core/service"
-	mock_roleadapter "twatter/pkg/mocks/adapter/roleadapter"
-	"twatter/pkg/platform/validator"
-	"twatter/pkg/types"
+	"golang-projects-a/pkg/consts"
+	"golang-projects-a/pkg/core/adapter"
+	"golang-projects-a/pkg/core/adapter/roleadapter"
+	"golang-projects-a/pkg/core/domain"
+	"golang-projects-a/pkg/core/service"
+	mock_roleadapter "golang-projects-a/pkg/mocks/adapter/roleadapter"
+	"golang-projects-a/pkg/platform/validator"
+	"golang-projects-a/pkg/types"
 
 	"github.com/golang/mock/gomock"
 )

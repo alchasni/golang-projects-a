@@ -5,11 +5,11 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"twatter/pkg/consts"
-	"twatter/pkg/core/adapter"
-	"twatter/pkg/core/service"
-	mock_rolepermissionadapter "twatter/pkg/mocks/adapter/rolepermissionadapter"
-	"twatter/pkg/platform/validator"
+	"golang-projects-a/pkg/consts"
+	"golang-projects-a/pkg/core/adapter"
+	"golang-projects-a/pkg/core/service"
+	mock_rolepermissionadapter "golang-projects-a/pkg/mocks/adapter/rolepermissionadapter"
+	"golang-projects-a/pkg/platform/validator"
 
 	"github.com/golang/mock/gomock"
 )

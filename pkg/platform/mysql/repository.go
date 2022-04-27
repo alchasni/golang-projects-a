@@ -1,9 +1,9 @@
 package mysql
 
 import (
-	"twatter/pkg/core/adapter/permissionadapter"
-	"twatter/pkg/core/adapter/roleadapter"
-	"twatter/pkg/core/adapter/rolepermissionadapter"
+	"golang-projects-a/pkg/core/adapter/permissionadapter"
+	"golang-projects-a/pkg/core/adapter/roleadapter"
+	"golang-projects-a/pkg/core/adapter/rolepermissionadapter"
 
 	"gorm.io/gorm"
 )
