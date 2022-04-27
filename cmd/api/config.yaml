@@ -1,0 +1,23 @@
+server:
+  env: test
+  http:
+    port: :8080
+    debug: true
+    read_timeout_seconds: 10
+    write_timeout_seconds: 35
+    base_url: http://localhost:8080
+
+datasource:
+  mysql:
+    db:
+      user: root
+      pass: rootpw
+      host: 127.0.0.1
+      port: 3306
+      db: twater
+      max_idle_conns: 10
+      max_open_conns: 50
+      slow_query_threshold_millis: 200
+    pagination:
+      min_page_size: 1
+      max_page_size: 100
