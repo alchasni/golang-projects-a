@@ -1,10 +1,6 @@
 package mysql
 
 import (
-	"golang-projects-a/pkg/core/adapter/permissionadapter"
-	"golang-projects-a/pkg/core/adapter/roleadapter"
-	"golang-projects-a/pkg/core/adapter/rolepermissionadapter"
-
 	"gorm.io/gorm"
 )
 
@@ -34,23 +30,23 @@ func New(cfg Config) (Service, error) {
 	}, nil
 }
 
-func (s Service) RoleRepo() roleadapter.RepoAdapter {
-	return roleRepo{
-		db:        s.db,
-		paginator: s.paginator,
-	}
-}
-
-func (s Service) PermissionRepo() permissionadapter.RepoAdapter {
-	return permissionRepo{
-		db:        s.db,
-		paginator: s.paginator,
-	}
-}
-
-func (s Service) RolePermissionRepo() rolepermissionadapter.RepoAdapter {
-	return rolePermissionRepo{
-		db:        s.db,
-		paginator: s.paginator,
-	}
-}
+//func (s Service) RoleRepo() roleadapter.RepoAdapter {
+//	return roleRepo{
+//		db:        s.db,
+//		paginator: s.paginator,
+//	}
+//}
+//
+//func (s Service) PermissionRepo() permissionadapter.RepoAdapter {
+//	return permissionRepo{
+//		db:        s.db,
+//		paginator: s.paginator,
+//	}
+//}
+//
+//func (s Service) RolePermissionRepo() rolepermissionadapter.RepoAdapter {
+//	return rolePermissionRepo{
+//		db:        s.db,
+//		paginator: s.paginator,
+//	}
+//}

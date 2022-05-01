@@ -3,47 +3,43 @@ package user
 import (
 	"context"
 	"errors"
-	"time"
+	"golang-projects-a/pkg/core/adapter/useradapter"
 
 	"golang-projects-a/pkg/core/adapter"
-	"golang-projects-a/pkg/core/adapter/useradapter"
 	"golang-projects-a/pkg/core/adapter/validatoradapter"
-	"golang-projects-a/pkg/core/domain"
 	"golang-projects-a/pkg/core/service"
-	"golang-projects-a/pkg/types"
 )
 
 type CreateReq struct {
-	Username string
-	Email    string
-	Password string
-	RoleCode types.Code
+	Username  string
+	Email     string
+	Password  string
+	AvatarUrl string
 }
 
 type CreateResp struct {
 	ID        uint64
-	CreatedAt time.Time
-	UpdatedAt time.Time
 	Username  string
 	Email     string
-	Role      *domain.Role
+	Password  string
+	AvatarUrl string
 }
 
 var (
-	validatorTag_CreateReqUsername = validatoradapter.Tag().Required().AlphaNum()
-	validatorTag_CreateReqEmail    = validatoradapter.Tag().Omitempty().Email()
-	validatorTag_CreateReqPassword = validatoradapter.Tag().Required()
-	validatorTag_CreateReqRoleCode = validatoradapter.Tag().Required()
+	validatorTag_CreateReqUsername  = validatoradapter.Tag().Required()
+	validatorTag_CreateReqEmail     = validatoradapter.Tag().Required()
+	validatorTag_CreateReqPassword  = validatoradapter.Tag().Required()
+	validatorTag_CreateReqAvatarUrl = validatoradapter.Tag().Required()
 )
 
-func (req CreateReq) validate(v validatoradapter.Adapter) error {
+func (req *CreateReq) validate(v validatoradapter.Adapter) error {
 	var err error
 
 	fields := []validatoradapter.Field{
 		{"username", req.Username, validatorTag_CreateReqUsername},
 		{"email", req.Email, validatorTag_CreateReqEmail},
 		{"password", req.Password, validatorTag_CreateReqPassword},
-		{"role_code", req.RoleCode, validatorTag_CreateReqRoleCode},
+		{"avatar_url", req.AvatarUrl, validatorTag_CreateReqAvatarUrl},
 	}
 	for _, field := range fields {
 		if err = v.Var(field); err != nil {
@@ -61,15 +57,15 @@ func (s Service) Create(ctx context.Context, req CreateReq) (resp CreateResp, se
 	}
 
 	user, err := s.UserRepo.Create(ctx, useradapter.RepoCreate{
-		Username: req.Username,
-		Email:    req.Email,
-		Password: req.Password,
-		RoleCode: req.RoleCode,
+		Username:  req.Username,
+		Email:     req.Email,
+		Password:  req.Password,
+		AvatarUrl: req.AvatarUrl,
 	})
 	if err != nil {
 		switch {
 		case errors.Is(err, adapter.ErrDuplicate):
-			return resp, service.ErrDatasourceAccess("username is already exist")
+			return resp, service.ErrDatasourceAccess("duplicate user code")
 		default:
 			return resp, service.ErrDatasourceAccess("create user query error")
 		}
@@ -77,10 +73,9 @@ func (s Service) Create(ctx context.Context, req CreateReq) (resp CreateResp, se
 
 	return CreateResp{
 		ID:        user.ID,
-		CreatedAt: user.CreatedAt,
-		UpdatedAt: user.UpdatedAt,
 		Username:  user.Username,
 		Email:     user.Email,
-		Role:      user.Role,
+		Password:  user.Password,
+		AvatarUrl: user.AvatarUrl,
 	}, nil
 }

@@ -14,10 +14,17 @@ datasource:
       pass: rootpw
       host: 127.0.0.1
       port: 3306
-      db: twater
+      db: maindb
       max_idle_conns: 10
       max_open_conns: 50
       slow_query_threshold_millis: 200
     pagination:
       min_page_size: 1
       max_page_size: 100
+  mongodb:
+    db:
+      user: root
+      pass: rootpw
+      host: 127.0.0.1
+      port: 27017
+      db: maindb

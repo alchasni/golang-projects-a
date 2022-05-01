@@ -1,6 +1,7 @@
 package yaml
 
 import (
+	"golang-projects-a/pkg/platform/mongodb"
 	"golang-projects-a/pkg/platform/mysql"
 	"golang-projects-a/pkg/transport/http"
 )
@@ -16,5 +17,6 @@ type server struct {
 }
 
 type datasource struct {
-	MySQL mysql.Config `yaml:"mysql"`
+	MySQL   mysql.Config   `yaml:"mysql"`
+	MongoDB mongodb.Config `yaml:"mongodb"`
 }

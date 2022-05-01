@@ -2,8 +2,8 @@ package user
 
 import (
 	"context"
-
 	"golang-projects-a/pkg/core/adapter/useradapter"
+
 	"golang-projects-a/pkg/core/adapter/validatoradapter"
 	"golang-projects-a/pkg/core/service"
 )

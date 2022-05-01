@@ -6,7 +6,6 @@ import (
 	"context"
 
 	"golang-projects-a/pkg/core/domain"
-	"golang-projects-a/pkg/types"
 )
 
 type RepoAdapter interface {
@@ -16,27 +15,27 @@ type RepoAdapter interface {
 	Create(ctx context.Context, data RepoCreate) (user domain.User, err error)
 	Update(ctx context.Context, id uint64, data RepoUpdate) (user domain.User, err error)
 	Delete(ctx context.Context, id uint64) (err error)
-
-	Validate(ctx context.Context, username string, password string) (err error)
-	UpdatePassword(ctx context.Context, username string, newPassword string) (err error)
 }
 
 type RepoFilter struct {
-	Username string
-	Email    string
-	RoleCode types.Code
-	PageNo   int
-	PageSize int
+	ID        uint64
+	Username  string
+	Email     string
+	Password  string
+	AvatarUrl string
+
+	Limit  int
+	Offset int
 }
 
 type RepoCreate struct {
-	Username string
-	Email    string
-	Password string
-	RoleCode types.Code
+	Username  string
+	Email     string
+	Password  string
+	AvatarUrl string
 }
 
 type RepoUpdate struct {
+	Username string
 	Email    string
-	RoleCode types.Code
 }

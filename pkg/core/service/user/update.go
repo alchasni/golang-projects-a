@@ -3,37 +3,29 @@ package user
 import (
 	"context"
 	"errors"
-	"strconv"
-	"time"
-
 	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/useradapter"
 	"golang-projects-a/pkg/core/adapter/validatoradapter"
-	"golang-projects-a/pkg/core/domain"
 	"golang-projects-a/pkg/core/service"
-	"golang-projects-a/pkg/types"
+	"strconv"
 )
 
 type UpdateReq struct {
 	ID       string
 	Email    string
-	RoleCode types.Code
+	Username string
 
 	id uint64
 }
 
 type UpdateResp struct {
-	ID        uint64
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Username  string
-	Email     string
-	Role      *domain.Role
+	ID       uint64
+	Username string
+	Email    string
 }
 
 var (
-	validatorTag_UpdateReqID    = validatoradapter.Tag().Required().Numeric()
-	validatorTag_UpdateReqEmail = validatoradapter.Tag().Omitempty().Email()
+	validatorTag_UpdateReqID = validatoradapter.Tag().Required().Numeric()
 )
 
 func (req *UpdateReq) validate(v validatoradapter.Adapter) error {
@@ -41,7 +33,6 @@ func (req *UpdateReq) validate(v validatoradapter.Adapter) error {
 
 	fields := []validatoradapter.Field{
 		{"id", req.ID, validatorTag_UpdateReqID},
-		{"email", req.Email, validatorTag_UpdateReqEmail},
 	}
 	for _, field := range fields {
 		if err = v.Var(field); err != nil {
@@ -49,8 +40,8 @@ func (req *UpdateReq) validate(v validatoradapter.Adapter) error {
 		}
 	}
 
-	id, _ := strconv.ParseInt(req.ID, 10, 64)
-	req.id = uint64(id)
+	id, _ := strconv.ParseUint(req.ID, 10, 64)
+	req.id = id
 
 	return nil
 }
@@ -63,23 +54,20 @@ func (s Service) Update(ctx context.Context, req UpdateReq) (resp UpdateResp, se
 
 	user, err := s.UserRepo.Update(ctx, req.id, useradapter.RepoUpdate{
 		Email:    req.Email,
-		RoleCode: req.RoleCode,
+		Username: req.Username,
 	})
 	if err != nil {
 		switch {
 		case errors.Is(err, adapter.ErrNotFound):
-			return resp, service.ErrDatasourceAccess("user not found")
+			return resp, service.ErrDatasourceAccess("role not found")
 		default:
-			return resp, service.ErrDatasourceAccess("update user query error")
+			return resp, service.ErrDatasourceAccess("update role query error")
 		}
 	}
 
 	return UpdateResp{
-		ID:        user.ID,
-		CreatedAt: user.CreatedAt,
-		UpdatedAt: user.UpdatedAt,
-		Username:  user.Username,
-		Email:     user.Email,
-		Role:      user.Role,
+		ID:       user.ID,
+		Username: user.Username,
+		Email:    user.Email,
 	}, nil
 }

@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	pathKey_Ping = "ping"
+	pathKey_Ping       = "ping"
+	pathKey_UserCreate = "user.create"
 
 	pathKey_PermissionFind    = "permission.find"
 	pathKey_PermissionGetList = "permission.get_list"
@@ -31,18 +32,21 @@ func (h HTTP) register() {
 
 	api := h.e.Group("/api", contextIDMiddleware)
 	apiV1 := api.Group("/v1")
+	h.paths[pathKey_UserCreate] = apiV1.POST("/user", h.userCreate).Path
+	h.paths[pathKey_UserCreate] = apiV1.DELETE("/user/:id", h.userDelete).Path
+	h.paths[pathKey_PermissionFind] = apiV1.GET("/user/:id", h.userFind).Path
 
-	h.paths[pathKey_PermissionFind] = apiV1.GET("/permissions/:id", h.permissionFind).Path
-	h.paths[pathKey_PermissionGetList] = apiV1.GET("/permissions", h.permissionGetList).Path
-	h.paths[pathKey_PermissionCreate] = apiV1.POST("/permissions", h.permissionCreate).Path
-	h.paths[pathKey_PermissionUpdate] = apiV1.PUT("/permissions/:id", h.permissionUpdate).Path
-	h.paths[pathKey_PermissionDelete] = apiV1.DELETE("/permissions/:id", h.permissionDelete).Path
-
-	h.paths[pathKey_RoleFind] = apiV1.GET("/roles/:id", h.roleFind).Path
-	h.paths[pathKey_RoleGetList] = apiV1.GET("/roles", h.roleGetList).Path
-	h.paths[pathKey_RoleCreate] = apiV1.POST("/roles", h.roleCreate).Path
-	h.paths[pathKey_RoleUpdate] = apiV1.PUT("/roles/:id", h.roleUpdate).Path
-	h.paths[pathKey_RoleDelete] = apiV1.DELETE("/roles/:id", h.roleDelete).Path
+	//h.paths[pathKey_PermissionFind] = apiV1.GET("/permissions/:id", h.permissionFind).Path
+	//h.paths[pathKey_PermissionGetList] = apiV1.GET("/permissions", h.permissionGetList).Path
+	//h.paths[pathKey_PermissionCreate] = apiV1.POST("/permissions", h.permissionCreate).Path
+	//h.paths[pathKey_PermissionUpdate] = apiV1.PUT("/permissions/:id", h.permissionUpdate).Path
+	//h.paths[pathKey_PermissionDelete] = apiV1.DELETE("/permissions/:id", h.permissionDelete).Path
+	//
+	//h.paths[pathKey_RoleFind] = apiV1.GET("/roles/:id", h.roleFind).Path
+	//h.paths[pathKey_RoleGetList] = apiV1.GET("/roles", h.roleGetList).Path
+	//h.paths[pathKey_RoleCreate] = apiV1.POST("/roles", h.roleCreate).Path
+	//h.paths[pathKey_RoleUpdate] = apiV1.PUT("/roles/:id", h.roleUpdate).Path
+	//h.paths[pathKey_RoleDelete] = apiV1.DELETE("/roles/:id", h.roleDelete).Path
 }
 
 func ping(c echo.Context) error {

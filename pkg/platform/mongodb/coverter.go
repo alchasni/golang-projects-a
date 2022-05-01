@@ -1,6 +1,8 @@
-package mysql
+package mongodb
 
-import "golang-projects-a/pkg/core/domain"
+import (
+	"golang-projects-a/pkg/core/domain"
+)
 
 func (u User) load(user domain.User) User {
 	return User{

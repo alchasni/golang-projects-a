@@ -2,6 +2,7 @@ package http
 
 import (
 	"context"
+	"golang-projects-a/pkg/core/service/user"
 	"html/template"
 	"io"
 	"net/http"
@@ -10,9 +11,6 @@ import (
 	"os/signal"
 	"time"
 
-	"golang-projects-a/pkg/core/service/permission"
-	"golang-projects-a/pkg/core/service/role"
-	"golang-projects-a/pkg/core/service/rolepermission"
 	"golang-projects-a/pkg/transport/http/middleware"
 
 	"github.com/labstack/echo/v4"
@@ -20,9 +18,7 @@ import (
 )
 
 type HTTP struct {
-	PermissionService     permission.UseCase
-	RoleService           role.UseCase
-	RolePermissionService rolepermission.UseCase
+	UserService user.UseCase
 
 	Env    string
 	Config Config

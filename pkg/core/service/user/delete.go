@@ -34,8 +34,8 @@ func (req *DeleteReq) validate(v validatoradapter.Adapter) error {
 		}
 	}
 
-	id, _ := strconv.ParseInt(req.ID, 10, 64)
-	req.id = uint64(id)
+	id, _ := strconv.ParseUint(req.ID, 10, 64)
+	req.id = id
 
 	return nil
 }

@@ -3,13 +3,10 @@ package user
 import (
 	"context"
 	"errors"
-	"strconv"
-	"time"
-
 	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/validatoradapter"
-	"golang-projects-a/pkg/core/domain"
 	"golang-projects-a/pkg/core/service"
+	"strconv"
 )
 
 type FindReq struct {
@@ -20,11 +17,10 @@ type FindReq struct {
 
 type FindResp struct {
 	ID        uint64
-	CreatedAt time.Time
-	UpdatedAt time.Time
 	Username  string
 	Email     string
-	Role      *domain.Role
+	Password  string
+	AvatarUrl string
 }
 
 var (
@@ -43,8 +39,8 @@ func (req *FindReq) validate(v validatoradapter.Adapter) error {
 		}
 	}
 
-	id, err := strconv.ParseInt(req.ID, 10, 64)
-	req.id = uint64(id)
+	id, _ := strconv.ParseUint(req.ID, 10, 64)
+	req.id = id
 
 	return nil
 }
@@ -67,10 +63,9 @@ func (s Service) Find(ctx context.Context, req FindReq) (resp FindResp, serviceE
 
 	return FindResp{
 		ID:        user.ID,
-		CreatedAt: user.CreatedAt,
-		UpdatedAt: user.UpdatedAt,
 		Username:  user.Username,
 		Email:     user.Email,
-		Role:      user.Role,
+		Password:  user.Password,
+		AvatarUrl: user.AvatarUrl,
 	}, nil
 }

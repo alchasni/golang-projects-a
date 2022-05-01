@@ -2,20 +2,22 @@ package user
 
 import (
 	"context"
-
 	"golang-projects-a/pkg/core/adapter/useradapter"
+
 	"golang-projects-a/pkg/core/adapter/validatoradapter"
 	"golang-projects-a/pkg/core/domain"
 	"golang-projects-a/pkg/core/service"
-	"golang-projects-a/pkg/types"
 )
 
 type GetListReq struct {
-	Username string
-	Email    string
-	RoleCode types.Code
-	PageNo   int
-	PageSize int
+	ID        uint64
+	Username  string
+	Email     string
+	Password  string
+	AvatarUrl string
+
+	Limit  int
+	Offset int
 }
 
 type GetListResp struct {
@@ -24,16 +26,16 @@ type GetListResp struct {
 }
 
 var (
-	validatorTag_GetListReqPageNo   = validatoradapter.Tag().Omitempty().Gte(0)
-	validatorTag_GetListReqPageSize = validatoradapter.Tag().Omitempty().Gte(0)
+	validatorTag_GetListLimit  = validatoradapter.Tag().Omitempty().Gte(0)
+	validatorTag_GetListOffset = validatoradapter.Tag().Omitempty().Gte(0)
 )
 
-func (req GetListReq) validate(v validatoradapter.Adapter) error {
+func (req *GetListReq) validate(v validatoradapter.Adapter) error {
 	var err error
 
 	fields := []validatoradapter.Field{
-		{"page_no", req.PageNo, validatorTag_GetListReqPageNo},
-		{"page_size", req.PageSize, validatorTag_GetListReqPageSize},
+		{"limit", req.Limit, validatorTag_GetListLimit},
+		{"offset", req.Offset, validatorTag_GetListOffset},
 	}
 	for _, field := range fields {
 		if err = v.Var(field); err != nil {
@@ -50,19 +52,21 @@ func (s Service) GetList(ctx context.Context, req GetListReq) (resp GetListResp,
 		return resp, service.ErrInvalidInput(err.Error())
 	}
 
-	users, err := s.UserRepo.GetList(ctx, useradapter.RepoFilter{
-		Username: req.Username,
-		Email:    req.Email,
-		RoleCode: req.RoleCode,
-		PageNo:   req.PageNo,
-		PageSize: req.PageSize,
+	user, err := s.UserRepo.GetList(ctx, useradapter.RepoFilter{
+		ID:        req.ID,
+		Username:  req.Username,
+		Email:     req.Email,
+		Password:  req.Password,
+		AvatarUrl: req.AvatarUrl,
+		Limit:     req.Limit,
+		Offset:    req.Offset,
 	})
 	if err != nil {
-		return resp, service.ErrDatasourceAccess("get list user query error")
+		return resp, service.ErrDatasourceAccess("get list role query error")
 	}
 
 	return GetListResp{
-		Items:    users.Items,
-		RowCount: users.RowCount,
+		Items:    user.Items,
+		RowCount: user.RowCount,
 	}, nil
 }
