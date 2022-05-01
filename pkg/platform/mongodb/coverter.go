@@ -4,6 +4,24 @@ import (
 	"golang-projects-a/pkg/core/domain"
 )
 
+func (o Organization) load(organization domain.Organization) Organization {
+	return Organization{
+		ID:        organization.ID,
+		Name:      organization.Name,
+		CreatedAt: organization.CreatedAt,
+		UpdatedAt: organization.UpdatedAt,
+	}
+}
+
+func (o Organization) domain() domain.Organization {
+	return domain.Organization{
+		ID:        o.ID,
+		Name:      o.Name,
+		CreatedAt: o.CreatedAt,
+		UpdatedAt: o.UpdatedAt,
+	}
+}
+
 func (u User) load(user domain.User) User {
 	return User{
 		ID:        user.ID,

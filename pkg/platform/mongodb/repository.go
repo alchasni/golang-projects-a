@@ -2,6 +2,7 @@ package mongodb
 
 import (
 	"go.mongodb.org/mongo-driver/mongo"
+	"golang-projects-a/pkg/core/adapter/organizationadapter"
 	"golang-projects-a/pkg/core/adapter/useradapter"
 )
 
@@ -23,6 +24,13 @@ func New(cfg Config) (Service, error) {
 func (s Service) UserRepo() useradapter.RepoAdapter {
 	collection := s.db.Collection(UserCollection)
 	return userRepo{
+		col: collection,
+	}
+}
+
+func (s Service) OrganizationRepo() organizationadapter.RepoAdapter {
+	collection := s.db.Collection(OrganizationCollection)
+	return organizationRepo{
 		col: collection,
 	}
 }

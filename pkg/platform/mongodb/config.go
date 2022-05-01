@@ -19,13 +19,13 @@ type DBConfig struct {
 	DB   string `yaml:"db" validate:"required"`
 }
 
-// TODO: set pass user and DB schema
 func (cfg DBConfig) GetURI() string {
 	return fmt.Sprintf("mongodb://%s:%s", cfg.Host, cfg.Port)
 }
 
 func initDB(cfg DBConfig) (*mongo.Database, error) {
 	ctx := context.TODO()
+	// TODO: set pass user and DB schema
 	clientOptions := options.Client().ApplyURI(cfg.GetURI())
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {

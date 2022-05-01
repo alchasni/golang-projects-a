@@ -32,6 +32,12 @@ func (h HTTP) register() {
 
 	api := h.e.Group("/api", contextIDMiddleware)
 	apiV1 := api.Group("/v1")
+	h.paths[pathKey_UserCreate] = apiV1.POST("/orgs", h.organizationCreate).Path
+	h.paths[pathKey_UserCreate] = apiV1.DELETE("/orgs/:id", h.organizationDelete).Path
+	h.paths[pathKey_PermissionFind] = apiV1.GET("/orgs/:id", h.organizationFind).Path
+	h.paths[pathKey_PermissionUpdate] = apiV1.PUT("/orgs/:id", h.organizationUpdate).Path
+	h.paths[pathKey_PermissionGetList] = apiV1.GET("/orgs", h.organizationGetList).Path
+
 	h.paths[pathKey_UserCreate] = apiV1.POST("/users", h.userCreate).Path
 	h.paths[pathKey_UserCreate] = apiV1.DELETE("/users/:id", h.userDelete).Path
 	h.paths[pathKey_PermissionFind] = apiV1.GET("/users/:id", h.userFind).Path

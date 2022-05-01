@@ -4,5 +4,6 @@ const (
 	MaxLimit     = 100
 	DefaultLimit = 10
 
-	UserCollection = "users"
+	UserCollection         = "users"
+	OrganizationCollection = "organizations"
 )

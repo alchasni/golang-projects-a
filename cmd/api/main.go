@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"golang-projects-a/pkg/core/service/organization"
 	"golang-projects-a/pkg/core/service/user"
 	"golang-projects-a/pkg/platform/mongodb"
 	"golang-projects-a/pkg/platform/validator"
@@ -40,15 +41,20 @@ func main() {
 	//
 	//}
 
+	organizationService := organization.Service{
+		OrganizationRepo: mongoDB.OrganizationRepo(),
+		Validator:        v,
+	}
 	userService := user.Service{
 		UserRepo:  mongoDB.UserRepo(),
 		Validator: v,
 	}
 
 	httpServer := http.HTTP{
-		UserService: userService,
-		Env:         cfg.Server.Env,
-		Config:      cfg.Server.HTTP,
+		OrganizationService: organizationService,
+		UserService:         userService,
+		Env:                 cfg.Server.Env,
+		Config:              cfg.Server.HTTP,
 	}
 	if err = httpServer.Init(); err != nil {
 		panic(fmt.Errorf("error http server initialization. %w", err))
