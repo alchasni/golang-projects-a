@@ -1,13 +1,12 @@
 package mysql
 
 import (
+	"golang-projects-a/pkg/core/adapter/useradapter"
 	"gorm.io/gorm"
 )
 
 const (
-	table_Roles           = "roles"
-	table_RolePermissions = "role_permissions"
-	table_Permissions     = "permissions"
+	tableUsers = "users"
 )
 
 type Service struct {
@@ -30,23 +29,9 @@ func New(cfg Config) (Service, error) {
 	}, nil
 }
 
-//func (s Service) RoleRepo() roleadapter.RepoAdapter {
-//	return roleRepo{
-//		db:        s.db,
-//		paginator: s.paginator,
-//	}
-//}
-//
-//func (s Service) PermissionRepo() permissionadapter.RepoAdapter {
-//	return permissionRepo{
-//		db:        s.db,
-//		paginator: s.paginator,
-//	}
-//}
-//
-//func (s Service) RolePermissionRepo() rolepermissionadapter.RepoAdapter {
-//	return rolePermissionRepo{
-//		db:        s.db,
-//		paginator: s.paginator,
-//	}
-//}
+func (s Service) UserRepo() useradapter.RepoAdapter {
+	return userRepo{
+		db:        s.db,
+		paginator: s.paginator,
+	}
+}

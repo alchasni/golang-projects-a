@@ -17,6 +17,7 @@ type server struct {
 }
 
 type datasource struct {
+	UsedDB  string         `yaml:"used_db"`
 	MySQL   mysql.Config   `yaml:"mysql"`
 	MongoDB mongodb.Config `yaml:"mongodb"`
 }

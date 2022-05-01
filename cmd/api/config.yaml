@@ -8,6 +8,7 @@ server:
     base_url: http://localhost:8080
 
 datasource:
+  used_db: mongodb
   mysql:
     db:
       user: root

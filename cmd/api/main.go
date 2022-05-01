@@ -5,10 +5,14 @@ import (
 	"fmt"
 	"golang-projects-a/pkg/core/service/user"
 	"golang-projects-a/pkg/platform/mongodb"
-
 	"golang-projects-a/pkg/platform/validator"
 	"golang-projects-a/pkg/platform/yaml"
 	"golang-projects-a/pkg/transport/http"
+)
+
+const (
+	MYSQL   = "mysql"
+	MONGODB = "mongodb"
 )
 
 func main() {
@@ -31,6 +35,10 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("error mysql initialization. %w", err))
 	}
+
+	//if cfg.Datasource.UsedDB == MONGODB {
+	//
+	//}
 
 	userService := user.Service{
 		UserRepo:  mongoDB.UserRepo(),

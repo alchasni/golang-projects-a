@@ -22,7 +22,7 @@ func (u userRepo) Find(ctx context.Context, id uint64) (domain.User, error) {
 
 	g, _ := errgroup.WithContext(ctx)
 	g.Go(func() error {
-		return u.db.WithContext(ctx).Table(table_Roles).First(&user, "id = ?", id).Error
+		return u.db.WithContext(ctx).Table(tableUsers).First(&user, "id = ?", id).Error
 	})
 
 	err := g.Wait()
@@ -77,7 +77,7 @@ func (u userRepo) Create(ctx context.Context, data useradapter.RepoCreate) (doma
 	})
 
 	err := u.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		if err := tx.WithContext(ctx).Table(table_Roles).Create(&user).Error; err != nil {
+		if err := tx.WithContext(ctx).Table(tableUsers).Create(&user).Error; err != nil {
 			switch {
 			case errorIs(err, errorCode_ER_DUP_ENTRY):
 				return adapter.ErrDuplicate
@@ -98,7 +98,7 @@ func (u userRepo) Create(ctx context.Context, data useradapter.RepoCreate) (doma
 func (u userRepo) Update(ctx context.Context, id uint64, data useradapter.RepoUpdate) (domain.User, error) {
 	user := User{}
 
-	err := u.db.WithContext(ctx).Table(table_Roles).First(&user).Error
+	err := u.db.WithContext(ctx).Table(tableUsers).First(&user).Error
 	if err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
@@ -113,7 +113,7 @@ func (u userRepo) Update(ctx context.Context, id uint64, data useradapter.RepoUp
 			user.Username = data.Username
 		}
 
-		if err = tx.WithContext(ctx).Table(table_Roles).Save(&user).Error; err != nil {
+		if err = tx.WithContext(ctx).Table(tableUsers).Save(&user).Error; err != nil {
 			return adapter.ErrQuery
 		}
 
@@ -130,7 +130,7 @@ func (u userRepo) Delete(ctx context.Context, id uint64) (err error) {
 	var query *gorm.DB
 
 	err = u.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		query = tx.WithContext(ctx).Table(table_Roles).Unscoped().Delete(&User{ID: id})
+		query = tx.WithContext(ctx).Table(tableUsers).Unscoped().Delete(&User{ID: id})
 		if err = query.Error; err != nil {
 			return adapter.ErrQuery
 		}
@@ -148,7 +148,7 @@ func (u userRepo) Delete(ctx context.Context, id uint64) (err error) {
 }
 
 func (u userRepo) filterQuery(ctx context.Context, db *gorm.DB, filter useradapter.RepoFilter, pageEnabled bool) *gorm.DB {
-	query := db.WithContext(ctx).Table(table_Roles)
+	query := db.WithContext(ctx).Table(tableUsers)
 	if filter.Username != "" {
 		query = query.Where("code LIKE ?", "%"+filter.Username+"%")
 	}
