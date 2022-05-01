@@ -16,9 +16,9 @@ type IdTracker struct {
 func GetLimit(l int) *int64 {
 	limit := int64(l)
 	if limit == 0 {
-		limit = DEFAULT_LIMIT
-	} else if limit > MAX_LIMIT {
-		limit = MAX_LIMIT
+		limit = DefaultLimit
+	} else if limit > MaxLimit {
+		limit = MaxLimit
 	}
 	return &limit
 }

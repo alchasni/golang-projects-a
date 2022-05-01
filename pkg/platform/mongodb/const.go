@@ -1,6 +1,8 @@
 package mongodb
 
 const (
-	MAX_LIMIT     = 100
-	DEFAULT_LIMIT = 10
+	MaxLimit     = 100
+	DefaultLimit = 10
+
+	UserCollection = "users"
 )

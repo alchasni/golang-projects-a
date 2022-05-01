@@ -21,7 +21,7 @@ func New(cfg Config) (Service, error) {
 }
 
 func (s Service) UserRepo() useradapter.RepoAdapter {
-	collection := s.db.Collection("user")
+	collection := s.db.Collection(UserCollection)
 	return userRepo{
 		col: collection,
 	}
