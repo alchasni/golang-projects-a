@@ -5,12 +5,27 @@ import (
 	"errors"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"log"
 )
 
 type IdTracker struct {
 	Id  string `bson:"_id"`
 	Seq uint   `bson:"seq"`
+}
+
+func BuildSelectorString(s map[string]interface{}, field string, value string) map[string]interface{} {
+	selector := s
+	if value != "" {
+		selector[field] = value
+	}
+	return selector
+}
+
+func BuildSelectorUint64(s map[string]interface{}, field string, value uint64) map[string]interface{} {
+	selector := s
+	if value != 0 {
+		selector[field] = value
+	}
+	return selector
 }
 
 func GetLimit(l int) *int64 {
@@ -39,7 +54,7 @@ func GetId(ctx context.Context, col *mongo.Collection) (uint, error) {
 	if err != nil || idTracker.Seq == 0 {
 		_, err = col.InsertOne(ctx, bson.M{"id": col.Name(), "seq": 1})
 		if err != nil {
-			log.Fatal(err)
+			return 0, err
 		}
 		return 1, nil
 	} else {
@@ -51,7 +66,7 @@ func GetId(ctx context.Context, col *mongo.Collection) (uint, error) {
 		} else if result.MatchedCount == 1 {
 			err := col.FindOne(ctx, bson.M{"id": col.Name()}).Decode(&idTracker)
 			if err != nil {
-				log.Fatal(err)
+				return 0, err
 			}
 			return idTracker.Seq, nil
 		} else {

@@ -45,7 +45,7 @@ func initORM(cfg DBConfig) (*gorm.DB, error) {
 	}
 
 	// Table migration
-	err = orm.AutoMigrate(&Role{}, &Permission{}, &RolePermission{})
+	err = orm.AutoMigrate(&User{})
 	if err != nil {
 		return nil, err
 	}

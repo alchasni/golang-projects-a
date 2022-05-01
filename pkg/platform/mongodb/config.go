@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"log"
 )
 
 type Config struct {
@@ -30,12 +29,12 @@ func initDB(cfg DBConfig) (*mongo.Database, error) {
 	clientOptions := options.Client().ApplyURI(cfg.GetURI())
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	err = client.Ping(ctx, nil)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	fmt.Println("Connected to MongoDB")
