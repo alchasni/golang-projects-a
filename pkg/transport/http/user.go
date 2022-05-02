@@ -13,10 +13,12 @@ func (h HTTP) userFind(c echo.Context) error {
 	ctx := middleware.ContextID(c)
 
 	type Response struct {
-		ID       uint64 `json:"id"`
-		Username string `json:"username"`
-		Email    string `json:"email"`
-		Password string `json:"password"`
+		ID             uint64 `json:"id"`
+		Username       string `json:"username"`
+		Email          string `json:"email"`
+		OrganizationId uint64 `json:"organization_id"`
+		FollowingCount uint64 `json:"following_count"`
+		FollowerCount  uint64 `json:"follower_count"`
 	}
 
 	serviceResp, serviceErr := h.UserService.Find(ctx, user.FindReq{ID: c.Param("id")})
@@ -25,10 +27,12 @@ func (h HTTP) userFind(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, Response{
-		ID:       serviceResp.ID,
-		Username: serviceResp.Username,
-		Email:    serviceResp.Email,
-		Password: serviceResp.Password,
+		ID:             serviceResp.ID,
+		Username:       serviceResp.Username,
+		Email:          serviceResp.Email,
+		OrganizationId: serviceResp.OrganizationId,
+		FollowingCount: serviceResp.FollowingCount,
+		FollowerCount:  serviceResp.FollowerCount,
 	})
 }
 
@@ -36,21 +40,27 @@ func (h HTTP) userGetList(c echo.Context) error {
 	ctx := middleware.ContextID(c)
 
 	type Request struct {
-		ID        uint64 `query:"id"`
-		Username  string `query:"username"`
-		Email     string `query:"email"`
-		Password  string `query:"password"`
-		AvatarUrl string `query:"avatar_url"`
+		ID             uint64 `query:"id"`
+		Username       string `query:"username"`
+		Email          string `query:"email"`
+		Password       string `query:"password"`
+		AvatarUrl      string `query:"avatar_url"`
+		OrganizationId uint64 `query:"organization_id"`
+		FollowingCount uint64 `query:"following_count"`
+		FollowerCount  uint64 `query:"follower_count"`
 
 		Limit  int `query:"limit"`
 		Offset int `query:"offset"`
 	}
 	type User struct {
-		ID        uint64 `json:"id"`
-		Username  string `json:"username"`
-		Email     string `query:"email"`
-		Password  string `query:"password"`
-		AvatarUrl string `query:"avatar_url"`
+		ID             uint64 `json:"id"`
+		Username       string `json:"username"`
+		Email          string `json:"email"`
+		Password       string `json:"password"`
+		AvatarUrl      string `json:"avatar_url"`
+		OrganizationId uint64 `json:"organization_id"`
+		FollowingCount uint64 `json:"following_count"`
+		FollowerCount  uint64 `json:"follower_count"`
 	}
 	type Response struct {
 		Items    []User `json:"items"`
@@ -63,13 +73,16 @@ func (h HTTP) userGetList(c echo.Context) error {
 	}
 
 	serviceResp, serviceErr := h.UserService.GetList(ctx, user.GetListReq{
-		ID:        req.ID,
-		Username:  req.Username,
-		Email:     req.Email,
-		Password:  req.Password,
-		AvatarUrl: req.AvatarUrl,
-		Limit:     req.Limit,
-		Offset:    req.Offset,
+		ID:             req.ID,
+		Username:       req.Username,
+		Email:          req.Email,
+		Password:       req.Password,
+		AvatarUrl:      req.AvatarUrl,
+		OrganizationId: req.OrganizationId,
+		FollowingCount: req.FollowingCount,
+		FollowerCount:  req.FollowerCount,
+		Limit:          req.Limit,
+		Offset:         req.Offset,
 	})
 	if serviceErr != nil {
 		return serviceErr
@@ -80,11 +93,14 @@ func (h HTTP) userGetList(c echo.Context) error {
 			items := make([]User, len(serviceResp.Items))
 			for index, item := range serviceResp.Items {
 				items[index] = User{
-					ID:        item.ID,
-					Username:  item.Username,
-					Email:     item.Email,
-					Password:  item.Password,
-					AvatarUrl: item.AvatarUrl,
+					ID:             item.ID,
+					Username:       item.Username,
+					Email:          item.Email,
+					Password:       item.Password,
+					AvatarUrl:      item.AvatarUrl,
+					OrganizationId: item.OrganizationId,
+					FollowingCount: item.FollowingCount,
+					FollowerCount:  item.FollowerCount,
 				}
 			}
 			return items
@@ -97,15 +113,21 @@ func (h HTTP) userCreate(c echo.Context) error {
 	ctx := middleware.ContextID(c)
 
 	type Request struct {
-		Username  string `json:"username"`
-		Email     string `json:"email"`
-		Password  string `json:"password"`
-		AvatarUrl string `json:"avatar_url"`
+		Username       string `json:"username"`
+		Email          string `json:"email"`
+		Password       string `json:"password"`
+		AvatarUrl      string `json:"avatar_url"`
+		OrganizationId uint64 `json:"organization_id"`
+		FollowingCount uint64 `json:"following_count"`
+		FollowerCount  uint64 `json:"follower_count"`
 	}
 	type Response struct {
-		ID        uint64 `json:"id"`
-		Username  string `json:"username"`
-		AvatarUrl string `json:"avatar_url"`
+		ID             uint64 `json:"id"`
+		Username       string `json:"username"`
+		AvatarUrl      string `json:"avatar_url"`
+		OrganizationId uint64 `json:"organization_id"`
+		FollowingCount uint64 `json:"following_count"`
+		FollowerCount  uint64 `json:"follower_count"`
 	}
 
 	req := Request{}
@@ -114,19 +136,25 @@ func (h HTTP) userCreate(c echo.Context) error {
 	}
 
 	serviceResp, serviceErr := h.UserService.Create(ctx, user.CreateReq{
-		Username:  req.Username,
-		Email:     req.Email,
-		Password:  req.Password,
-		AvatarUrl: req.AvatarUrl,
+		Username:       req.Username,
+		Email:          req.Email,
+		Password:       req.Password,
+		AvatarUrl:      req.AvatarUrl,
+		OrganizationId: req.OrganizationId,
+		FollowingCount: req.FollowingCount,
+		FollowerCount:  req.FollowerCount,
 	})
 	if serviceErr != nil {
 		return serviceErr
 	}
 
 	return c.JSON(http.StatusOK, Response{
-		ID:        serviceResp.ID,
-		Username:  serviceResp.Username,
-		AvatarUrl: serviceResp.AvatarUrl,
+		ID:             serviceResp.ID,
+		Username:       serviceResp.Username,
+		AvatarUrl:      serviceResp.AvatarUrl,
+		OrganizationId: serviceResp.OrganizationId,
+		FollowingCount: serviceResp.FollowingCount,
+		FollowerCount:  serviceResp.FollowerCount,
 	})
 }
 
@@ -134,13 +162,19 @@ func (h HTTP) userUpdate(c echo.Context) error {
 	ctx := middleware.ContextID(c)
 
 	type Request struct {
-		Username string `json:"username"`
-		Email    string `json:"email"`
+		Username       string `json:"username"`
+		Email          string `json:"email"`
+		OrganizationId uint64 `json:"organization_id"`
+		FollowingCount uint64 `json:"following_count"`
+		FollowerCount  uint64 `json:"follower_count"`
 	}
 	type Response struct {
-		ID       uint64 `json:"id"`
-		Username string `json:"username"`
-		Email    string `json:"email"`
+		ID             uint64 `json:"id"`
+		Username       string `json:"username"`
+		Email          string `json:"email"`
+		OrganizationId uint64 `json:"organization_id"`
+		FollowingCount uint64 `json:"following_count"`
+		FollowerCount  uint64 `json:"follower_count"`
 	}
 
 	req := Request{}
@@ -158,9 +192,12 @@ func (h HTTP) userUpdate(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, Response{
-		ID:       serviceResp.ID,
-		Username: serviceResp.Username,
-		Email:    serviceResp.Email,
+		ID:             serviceResp.ID,
+		Username:       serviceResp.Username,
+		Email:          serviceResp.Email,
+		OrganizationId: serviceResp.OrganizationId,
+		FollowingCount: serviceResp.FollowingCount,
+		FollowerCount:  serviceResp.FollowerCount,
 	})
 }
 

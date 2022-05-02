@@ -18,24 +18,33 @@ type RepoAdapter interface {
 }
 
 type RepoFilter struct {
-	ID        uint64
-	Username  string
-	Email     string
-	Password  string
-	AvatarUrl string
+	ID             uint64
+	Username       string
+	Email          string
+	Password       string
+	AvatarUrl      string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 
 	Limit  int
 	Offset int
 }
 
 type RepoCreate struct {
-	Username  string
-	Email     string
-	Password  string
-	AvatarUrl string
+	Username       string
+	Email          string
+	Password       string
+	AvatarUrl      string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 }
 
 type RepoUpdate struct {
-	Username string
-	Email    string
+	Username       string
+	Email          string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 }

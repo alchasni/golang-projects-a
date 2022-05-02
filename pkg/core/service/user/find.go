@@ -16,11 +16,14 @@ type FindReq struct {
 }
 
 type FindResp struct {
-	ID        uint64
-	Username  string
-	Email     string
-	Password  string
-	AvatarUrl string
+	ID             uint64
+	Username       string
+	Email          string
+	Password       string
+	AvatarUrl      string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 }
 
 var (
@@ -62,10 +65,13 @@ func (s Service) Find(ctx context.Context, req FindReq) (resp FindResp, serviceE
 	}
 
 	return FindResp{
-		ID:        user.ID,
-		Username:  user.Username,
-		Email:     user.Email,
-		Password:  user.Password,
-		AvatarUrl: user.AvatarUrl,
+		ID:             user.ID,
+		Username:       user.Username,
+		Email:          user.Email,
+		Password:       user.Password,
+		AvatarUrl:      user.AvatarUrl,
+		OrganizationId: user.OrganizationId,
+		FollowingCount: user.FollowingCount,
+		FollowerCount:  user.FollowerCount,
 	}, nil
 }

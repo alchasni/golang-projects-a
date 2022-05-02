@@ -46,8 +46,9 @@ func main() {
 		Validator:        v,
 	}
 	userService := user.Service{
-		UserRepo:  mongoDB.UserRepo(),
-		Validator: v,
+		UserRepo:         mongoDB.UserRepo(),
+		Validator:        v,
+		OrganizationRepo: mongoDB.OrganizationRepo(),
 	}
 
 	httpServer := http.HTTP{

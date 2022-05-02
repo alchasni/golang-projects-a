@@ -65,6 +65,9 @@ func (u userRepo) buildSelectorFind(filter useradapter.RepoFilter) (map[string]i
 	BuildSelectorString(selector, "email", filter.Email)
 	BuildSelectorString(selector, "password", filter.Password)
 	BuildSelectorString(selector, "avatar_url", filter.AvatarUrl)
+	BuildSelectorUint64(selector, "organization_id", filter.OrganizationId)
+	BuildSelectorUint64(selector, "following_count", filter.FollowingCount)
+	BuildSelectorUint64(selector, "follower_count", filter.FollowerCount)
 	selector["deleted_at"] = GetSoftDeletedSelector(false)
 
 	option.Limit = GetLimit(filter.Limit)
@@ -79,13 +82,17 @@ func (u userRepo) Create(ctx context.Context, data useradapter.RepoCreate) (doma
 		return domain.User{}, err
 	}
 	user := User{
-		ID:        uint64(newId),
-		Username:  data.Username,
-		Password:  data.Password,
-		Email:     data.Email,
-		AvatarUrl: data.AvatarUrl,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		ID:             uint64(newId),
+		Username:       data.Username,
+		Password:       data.Password,
+		Email:          data.Email,
+		AvatarUrl:      data.AvatarUrl,
+		OrganizationId: data.OrganizationId,
+		FollowingCount: data.FollowingCount,
+		FollowerCount:  data.FollowerCount,
+		CreatedAt:      time.Now(),
+		UpdatedAt:      time.Now(),
+		DeletedAt:      time.Time{},
 	}
 
 	_, err = u.col.InsertOne(ctx, user)
@@ -106,9 +113,13 @@ func (u userRepo) Update(ctx context.Context, id uint64, data useradapter.RepoUp
 	selector["id"] = id
 	selector["deleted_at"] = GetSoftDeletedSelector(false)
 	user := User{
-		Username:  data.Username,
-		Email:     data.Email,
-		UpdatedAt: time.Now(),
+		Username:       data.Username,
+		Email:          data.Email,
+		OrganizationId: data.OrganizationId,
+		FollowingCount: data.FollowingCount,
+		FollowerCount:  data.FollowerCount,
+		CreatedAt:      time.Time{},
+		UpdatedAt:      time.Now(),
 	}
 
 	result, err := u.col.UpdateOne(ctx, selector, bson.M{"$set": user})

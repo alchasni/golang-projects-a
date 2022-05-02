@@ -11,17 +11,23 @@ import (
 )
 
 type UpdateReq struct {
-	ID       string
-	Email    string
-	Username string
+	ID             string
+	Email          string
+	Username       string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 
 	id uint64
 }
 
 type UpdateResp struct {
-	ID       uint64
-	Username string
-	Email    string
+	ID             uint64
+	Username       string
+	Email          string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 }
 
 var (
@@ -53,8 +59,11 @@ func (s Service) Update(ctx context.Context, req UpdateReq) (resp UpdateResp, se
 	}
 
 	user, err := s.UserRepo.Update(ctx, req.id, useradapter.RepoUpdate{
-		Email:    req.Email,
-		Username: req.Username,
+		Username:       req.Username,
+		Email:          req.Email,
+		OrganizationId: req.OrganizationId,
+		FollowingCount: req.FollowingCount,
+		FollowerCount:  req.FollowerCount,
 	})
 	if err != nil {
 		switch {
@@ -66,8 +75,11 @@ func (s Service) Update(ctx context.Context, req UpdateReq) (resp UpdateResp, se
 	}
 
 	return UpdateResp{
-		ID:       user.ID,
-		Username: user.Username,
-		Email:    user.Email,
+		ID:             user.ID,
+		Username:       user.Username,
+		Email:          user.Email,
+		OrganizationId: user.OrganizationId,
+		FollowingCount: user.FollowingCount,
+		FollowerCount:  user.FollowerCount,
 	}, nil
 }

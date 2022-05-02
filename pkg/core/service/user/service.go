@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"golang-projects-a/pkg/core/adapter/organizationadapter"
 	"golang-projects-a/pkg/core/adapter/useradapter"
 
 	"golang-projects-a/pkg/core/adapter/validatoradapter"
@@ -20,6 +21,8 @@ type UseCase interface {
 type Service struct {
 	UserRepo  useradapter.RepoAdapter
 	Validator validatoradapter.Adapter
+
+	OrganizationRepo organizationadapter.RepoAdapter
 }
 
 var _ UseCase = Service{}
