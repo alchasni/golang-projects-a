@@ -53,7 +53,8 @@ func (s Service) Update(ctx context.Context, req UpdateReq) (resp UpdateResp, se
 	}
 
 	comment, err := s.CommentRepo.Update(ctx, req.id, commentadapter.RepoUpdate{
-		Comment: req.Comment,
+		Comment:        req.Comment,
+		OrganizationId: req.OrganizationId,
 	})
 	if err != nil {
 		switch {
