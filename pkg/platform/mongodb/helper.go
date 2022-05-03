@@ -4,6 +4,7 @@ import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang-projects-a/pkg/core/adapter"
 )
 
@@ -28,8 +29,16 @@ func BuildSelectorUint64(s map[string]interface{}, field string, value uint64) m
 	return selector
 }
 
-func GetLimit(l int) *int64 {
-	limit := int64(l)
+func GetFindOption(limit int64, skip int64) *options.FindOptions {
+	option := options.Find()
+	option.Limit = getLimit(limit)
+	option.Skip = getSkip(skip)
+
+	return option
+
+}
+
+func getLimit(limit int64) *int64 {
 	if limit == 0 {
 		limit = DefaultLimit
 	} else if limit > MaxLimit {
@@ -38,8 +47,7 @@ func GetLimit(l int) *int64 {
 	return &limit
 }
 
-func GetSkip(s int) *int64 {
-	skip := int64(s)
+func getSkip(skip int64) *int64 {
 	return &skip
 }
 

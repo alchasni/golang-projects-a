@@ -15,14 +15,16 @@ type RepoAdapter interface {
 	Create(ctx context.Context, data RepoCreate) (comment domain.Comment, err error)
 	Update(ctx context.Context, id uint64, data RepoUpdate) (comment domain.Comment, err error)
 	Delete(ctx context.Context, id uint64) (err error)
+
+	DeleteMany(ctx context.Context, filter RepoFilter) (err error)
 }
 
 type RepoFilter struct {
 	ID             uint64
 	OrganizationId uint64
 
-	Limit  int
-	Offset int
+	Limit  int64
+	Offset int64
 }
 
 type RepoCreate struct {

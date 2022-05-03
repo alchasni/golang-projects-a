@@ -12,8 +12,8 @@ type GetListReq struct {
 	ID   uint64
 	Name string
 
-	Limit  int
-	Offset int
+	Limit  int64
+	Offset int64
 }
 
 type GetListResp struct {

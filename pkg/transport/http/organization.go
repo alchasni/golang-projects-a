@@ -35,8 +35,8 @@ func (h HTTP) organizationGetList(c echo.Context) error {
 		ID   uint64 `query:"id"`
 		Name string `query:"name"`
 
-		Limit  int `query:"limit"`
-		Offset int `query:"offset"`
+		Limit  int64 `query:"limit"`
+		Offset int64 `query:"offset"`
 	}
 	type Organization struct {
 		ID   uint64 `json:"id"`

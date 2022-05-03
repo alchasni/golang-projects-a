@@ -4,7 +4,6 @@ import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/useradapter"
 	"golang-projects-a/pkg/core/domain"
@@ -33,10 +32,11 @@ func (u userRepo) Find(ctx context.Context, id uint64) (domain.User, error) {
 func (u userRepo) GetList(ctx context.Context, filter useradapter.RepoFilter) (domain.Users, error) {
 	var res domain.Users
 
-	selector, option, err := u.buildSelectorFind(filter)
+	selector, err := u.buildSelectorFind(filter)
 	if err != nil {
 		return res, err
 	}
+	option := GetFindOption(filter.Limit, filter.Offset)
 
 	cur, err := u.col.Find(ctx, selector, option)
 	if err != nil {
@@ -57,9 +57,8 @@ func (u userRepo) GetList(ctx context.Context, filter useradapter.RepoFilter) (d
 	return res, nil
 }
 
-func (u userRepo) buildSelectorFind(filter useradapter.RepoFilter) (map[string]interface{}, *options.FindOptions, error) {
+func (u userRepo) buildSelectorFind(filter useradapter.RepoFilter) (map[string]interface{}, error) {
 	selector := make(map[string]interface{})
-	option := options.Find()
 
 	BuildSelectorUint64(selector, "id", filter.ID)
 	BuildSelectorString(selector, "username", filter.Username)
@@ -71,10 +70,7 @@ func (u userRepo) buildSelectorFind(filter useradapter.RepoFilter) (map[string]i
 	BuildSelectorUint64(selector, "follower_count", filter.FollowerCount)
 	selector["deleted_at"] = GetSoftDeletedSelector(false)
 
-	option.Limit = GetLimit(filter.Limit)
-	option.Skip = GetSkip(filter.Offset)
-
-	return selector, option, nil
+	return selector, nil
 }
 
 func (u userRepo) Create(ctx context.Context, data useradapter.RepoCreate) (domain.User, error) {

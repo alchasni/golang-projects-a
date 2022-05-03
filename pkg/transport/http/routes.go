@@ -12,6 +12,8 @@ const (
 	pathKey_Ping          = "ping"
 	pathKey_HandlerCreate = "handler.create"
 	pathKey_HandlerList   = "handler.list"
+	pathKey_HandlerDelete = "handler.delete"
+	pathKey_HandlerMember = "handler.member"
 
 	pathKey_CommentCreate  = "comment.create"
 	pathKey_CommentDelete  = "comment.delete"
@@ -43,6 +45,8 @@ func (h HTTP) register() {
 	// main endpoint
 	h.paths[pathKey_HandlerCreate] = apiV1.POST("/orgs/:name/comments", h.commentCreateByOrg).Path
 	h.paths[pathKey_HandlerList] = apiV1.GET("/orgs/:name/comments", h.commentListByOrg).Path
+	h.paths[pathKey_HandlerDelete] = apiV1.DELETE("/orgs/:name/comments", h.commentDeleteByOrg).Path
+	h.paths[pathKey_HandlerMember] = apiV1.GET("/orgs/:name/members", h.commentDeleteByOrg).Path
 
 	// helper endpoint for populate and checking data
 	h.paths[pathKey_CommentCreate] = apiV1.POST("/comments", h.commentCreate).Path

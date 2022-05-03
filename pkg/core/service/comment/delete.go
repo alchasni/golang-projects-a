@@ -16,8 +16,6 @@ type DeleteReq struct {
 	id uint64
 }
 
-type DeleteResp struct{}
-
 var (
 	validatorTag_DeleteReqID = validatoradapter.Tag().Required().Numeric()
 )

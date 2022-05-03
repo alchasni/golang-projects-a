@@ -4,7 +4,6 @@ import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/organizationadapter"
 	"golang-projects-a/pkg/core/domain"
@@ -33,10 +32,11 @@ func (o organizationRepo) Find(ctx context.Context, id uint64) (domain.Organizat
 func (o organizationRepo) GetList(ctx context.Context, filter organizationadapter.RepoFilter) (domain.Organizations, error) {
 	var res domain.Organizations
 
-	selector, option, err := o.buildSelectorFind(filter)
+	selector, err := o.buildSelectorFind(filter)
 	if err != nil {
 		return res, err
 	}
+	option := GetFindOption(filter.Limit, filter.Offset)
 
 	cur, err := o.col.Find(ctx, selector, option)
 	if err != nil {
@@ -57,18 +57,14 @@ func (o organizationRepo) GetList(ctx context.Context, filter organizationadapte
 	return res, nil
 }
 
-func (o organizationRepo) buildSelectorFind(filter organizationadapter.RepoFilter) (map[string]interface{}, *options.FindOptions, error) {
+func (o organizationRepo) buildSelectorFind(filter organizationadapter.RepoFilter) (map[string]interface{}, error) {
 	selector := make(map[string]interface{})
-	option := options.Find()
 
 	BuildSelectorUint64(selector, "id", filter.ID)
 	BuildSelectorString(selector, "name", filter.Name)
 	selector["deleted_at"] = GetSoftDeletedSelector(false)
 
-	option.Limit = GetLimit(filter.Limit)
-	option.Skip = GetSkip(filter.Offset)
-
-	return selector, option, nil
+	return selector, nil
 }
 
 func (o organizationRepo) Create(ctx context.Context, data organizationadapter.RepoCreate) (domain.Organization, error) {

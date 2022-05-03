@@ -19,8 +19,8 @@ type GetListReq struct {
 	FollowingCount uint64
 	FollowerCount  uint64
 
-	Limit  int
-	Offset int
+	Limit  int64
+	Offset int64
 }
 
 type GetListResp struct {

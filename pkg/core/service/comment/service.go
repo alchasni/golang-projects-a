@@ -14,6 +14,8 @@ type UseCase interface {
 	Create(ctx context.Context, req CreateReq) (resp CreateResp, serviceErr service.Error)
 	Update(ctx context.Context, req UpdateReq) (resp UpdateResp, serviceErr service.Error)
 	Delete(ctx context.Context, req DeleteReq) (serviceErr service.Error)
+
+	DeleteMany(ctx context.Context, req DeleteManyReq) (serviceErr service.Error)
 }
 
 type Service struct {

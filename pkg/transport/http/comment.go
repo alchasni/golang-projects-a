@@ -37,8 +37,8 @@ func (h HTTP) commentGetList(c echo.Context) error {
 		ID             uint64 `query:"id"`
 		OrganizationId uint64 `query:"organization_id"`
 
-		Limit  int `query:"limit"`
-		Offset int `query:"offset"`
+		Limit  int64 `query:"limit"`
+		Offset int64 `query:"offset"`
 	}
 	type Comment struct {
 		ID             uint64 `json:"id"`

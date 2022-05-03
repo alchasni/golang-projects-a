@@ -68,3 +68,23 @@ func (h HTTP) commentListByOrg(c echo.Context) error {
 		}(),
 	})
 }
+
+func (h HTTP) commentDeleteByOrg(c echo.Context) error {
+	ctx := middleware.ContextID(c)
+
+	orgName := c.Param("name")
+
+	org, serviceErr := h.OrganizationService.FindByName(ctx, organization.FindByNameReq{Name: orgName})
+	if serviceErr != nil {
+		return serviceErr
+	}
+
+	serviceErr = h.CommentService.DeleteMany(ctx, comment.DeleteManyReq{
+		OrganizationId: org.ID,
+	})
+	if serviceErr != nil {
+		return serviceErr
+	}
+
+	return c.NoContent(http.StatusOK)
+}

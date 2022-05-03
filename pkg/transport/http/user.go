@@ -49,8 +49,8 @@ func (h HTTP) userGetList(c echo.Context) error {
 		FollowingCount uint64 `query:"following_count"`
 		FollowerCount  uint64 `query:"follower_count"`
 
-		Limit  int `query:"limit"`
-		Offset int `query:"offset"`
+		Limit  int64 `query:"limit"`
+		Offset int64 `query:"offset"`
 	}
 	type User struct {
 		ID             uint64 `json:"id"`

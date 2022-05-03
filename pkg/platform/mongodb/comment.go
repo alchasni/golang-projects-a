@@ -4,7 +4,6 @@ import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/commentadapter"
 	"golang-projects-a/pkg/core/domain"
@@ -33,10 +32,11 @@ func (c commentRepo) Find(ctx context.Context, id uint64) (domain.Comment, error
 func (c commentRepo) GetList(ctx context.Context, filter commentadapter.RepoFilter) (domain.Comments, error) {
 	var res domain.Comments
 
-	selector, option, err := c.buildSelectorFind(filter)
+	selector, err := c.buildSelectorFind(filter)
 	if err != nil {
 		return res, err
 	}
+	option := GetFindOption(filter.Limit, filter.Offset)
 
 	cur, err := c.col.Find(ctx, selector, option)
 	if err != nil {
@@ -57,18 +57,14 @@ func (c commentRepo) GetList(ctx context.Context, filter commentadapter.RepoFilt
 	return res, nil
 }
 
-func (c commentRepo) buildSelectorFind(filter commentadapter.RepoFilter) (map[string]interface{}, *options.FindOptions, error) {
+func (c commentRepo) buildSelectorFind(filter commentadapter.RepoFilter) (map[string]interface{}, error) {
 	selector := make(map[string]interface{})
-	option := options.Find()
 
 	BuildSelectorUint64(selector, "id", filter.ID)
 	BuildSelectorUint64(selector, "organization_id", filter.OrganizationId)
 	selector["deleted_at"] = GetSoftDeletedSelector(false)
 
-	option.Limit = GetLimit(filter.Limit)
-	option.Skip = GetSkip(filter.Offset)
-
-	return selector, option, nil
+	return selector, nil
 }
 
 func (c commentRepo) Create(ctx context.Context, data commentadapter.RepoCreate) (domain.Comment, error) {
@@ -133,6 +129,28 @@ func (c commentRepo) Delete(ctx context.Context, id uint64) (err error) {
 	}
 
 	result, err := c.col.UpdateOne(ctx, selector, bson.M{"$set": comment})
+	if err != nil {
+		return err
+	}
+
+	if result.MatchedCount < 1 {
+		return adapter.ErrNotFound
+	}
+
+	return nil
+}
+
+func (c commentRepo) DeleteMany(ctx context.Context, filter commentadapter.RepoFilter) (err error) {
+	selector, err := c.buildSelectorFind(filter)
+	if err != nil {
+		return err
+	}
+
+	comment := Comment{
+		DeletedAt: time.Now(),
+	}
+
+	result, err := c.col.UpdateMany(ctx, selector, bson.M{"$set": comment})
 	if err != nil {
 		return err
 	}

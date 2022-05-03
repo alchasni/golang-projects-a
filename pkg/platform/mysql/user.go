@@ -156,7 +156,7 @@ func (u userRepo) filterQuery(ctx context.Context, db *gorm.DB, filter useradapt
 		query = query.Where("name LIKE ?", "%"+filter.Email+"%")
 	}
 	if pageEnabled && filter.Limit > 0 {
-		query = u.paginator.paginate(query, filter.Offset, filter.Limit)
+		query = u.paginator.paginate(query, int(filter.Offset), int(filter.Limit))
 	}
 
 	return query
