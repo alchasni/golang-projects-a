@@ -12,8 +12,8 @@ import (
 
 type UpdateReq struct {
 	ID             string
-	Email          string
 	Username       string
+	Email          string
 	OrganizationId uint64
 	FollowingCount uint64
 	FollowerCount  uint64

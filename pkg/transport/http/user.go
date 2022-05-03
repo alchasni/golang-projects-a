@@ -184,8 +184,8 @@ func (h HTTP) userUpdate(c echo.Context) error {
 
 	serviceResp, serviceErr := h.UserService.Update(ctx, user.UpdateReq{
 		ID:             c.Param("id"),
-		Email:          req.Email,
 		Username:       req.Username,
+		Email:          req.Email,
 		OrganizationId: req.OrganizationId,
 		FollowingCount: req.FollowingCount,
 		FollowerCount:  req.FollowerCount,
