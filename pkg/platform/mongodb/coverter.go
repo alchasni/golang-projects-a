@@ -17,10 +17,11 @@ func (c Comment) load(comment domain.Comment) Comment {
 
 func (c Comment) domain() domain.Comment {
 	return domain.Comment{
-		ID:        c.ID,
-		Comment:   c.Comment,
-		CreatedAt: c.CreatedAt,
-		UpdatedAt: c.UpdatedAt,
+		ID:             c.ID,
+		Comment:        c.Comment,
+		OrganizationId: c.OrganizationId,
+		CreatedAt:      c.CreatedAt,
+		UpdatedAt:      c.UpdatedAt,
 	}
 }
 
