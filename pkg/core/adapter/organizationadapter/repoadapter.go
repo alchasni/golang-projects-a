@@ -15,6 +15,8 @@ type RepoAdapter interface {
 	Create(ctx context.Context, data RepoCreate) (organization domain.Organization, err error)
 	Update(ctx context.Context, id uint64, data RepoUpdate) (organization domain.Organization, err error)
 	Delete(ctx context.Context, id uint64) (err error)
+
+	FindByName(ctx context.Context, name string) (organization domain.Organization, err error)
 }
 
 type RepoFilter struct {

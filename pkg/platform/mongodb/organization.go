@@ -141,3 +141,16 @@ func (o organizationRepo) Delete(ctx context.Context, id uint64) (err error) {
 
 	return nil
 }
+
+func (o organizationRepo) FindByName(ctx context.Context, name string) (organization domain.Organization, err error) {
+	var res Organization
+	selector := make(map[string]interface{})
+	selector["name"] = name
+	selector["deleted_at"] = GetSoftDeletedSelector(false)
+
+	if err := o.col.FindOne(ctx, selector).Decode(&res); err != nil {
+		return res.domain(), err
+	}
+
+	return res.domain(), nil
+}
