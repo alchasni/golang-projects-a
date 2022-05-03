@@ -18,9 +18,8 @@ type UpdateReq struct {
 }
 
 type UpdateResp struct {
-	ID    uint64
-	Name  string
-	Email string
+	ID   uint64
+	Name string
 }
 
 var (
