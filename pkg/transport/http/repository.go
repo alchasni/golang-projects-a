@@ -2,6 +2,7 @@ package http
 
 import (
 	"context"
+	"golang-projects-a/pkg/core/service/comment"
 	"golang-projects-a/pkg/core/service/organization"
 	"golang-projects-a/pkg/core/service/user"
 	"html/template"
@@ -19,6 +20,7 @@ import (
 )
 
 type HTTP struct {
+	CommentService      comment.UseCase
 	OrganizationService organization.UseCase
 	UserService         user.UseCase
 

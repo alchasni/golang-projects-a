@@ -9,7 +9,7 @@ import (
 
 type IdTracker struct {
 	Id  string `bson:"_id"`
-	Seq uint   `bson:"seq"`
+	Seq uint64 `bson:"seq"`
 }
 
 func BuildSelectorString(s map[string]interface{}, field string, value string) map[string]interface{} {
@@ -47,7 +47,7 @@ func GetSoftDeletedSelector(deleted bool) map[string]interface{} {
 	return map[string]interface{}{"$exists": deleted}
 }
 
-func GetId(ctx context.Context, col *mongo.Collection) (uint, error) {
+func GetId(ctx context.Context, col *mongo.Collection) (uint64, error) {
 	idTracker := IdTracker{}
 	res := col.FindOne(ctx, bson.M{"id": col.Name()})
 	err := res.Decode(&idTracker)

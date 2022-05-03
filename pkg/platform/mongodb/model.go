@@ -4,6 +4,16 @@ import (
 	"time"
 )
 
+type Comment struct {
+	ID             uint64 `json:"id" bson:"id,omitempty"`
+	Comment        string `json:"comment" bson:"comment,omitempty"`
+	OrganizationId uint64 `json:"organization_id" bson:"organization_id,omitempty"`
+
+	CreatedAt time.Time `json:"created_at" bson:"created_at,omitempty"`
+	UpdatedAt time.Time `json:"updated_at" bson:"updated_at,omitempty"`
+	DeletedAt time.Time `json:"-" bson:"deleted_at,omitempty"`
+}
+
 type Organization struct {
 	ID   uint64 `json:"id" bson:"id,omitempty"`
 	Name string `json:"name" bson:"name,omitempty"`

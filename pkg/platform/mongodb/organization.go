@@ -77,7 +77,7 @@ func (o organizationRepo) Create(ctx context.Context, data organizationadapter.R
 		return domain.Organization{}, err
 	}
 	organization := Organization{
-		ID:        uint64(newId),
+		ID:        newId,
 		Name:      data.Name,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
@@ -88,7 +88,7 @@ func (o organizationRepo) Create(ctx context.Context, data organizationadapter.R
 		return domain.Organization{}, err
 	}
 
-	newOrganization, err := o.Find(ctx, uint64(newId))
+	newOrganization, err := o.Find(ctx, newId)
 	if err != nil {
 		return domain.Organization{}, err
 	}

@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"golang-projects-a/pkg/core/service/comment"
 	"golang-projects-a/pkg/core/service/organization"
 	"golang-projects-a/pkg/core/service/user"
 	"golang-projects-a/pkg/platform/mongodb"
@@ -41,6 +42,10 @@ func main() {
 	//
 	//}
 
+	commentService := comment.Service{
+		CommentRepo: mongoDB.CommentRepo(),
+		Validator:   v,
+	}
 	organizationService := organization.Service{
 		OrganizationRepo: mongoDB.OrganizationRepo(),
 		Validator:        v,
@@ -51,6 +56,7 @@ func main() {
 	}
 
 	httpServer := http.HTTP{
+		CommentService:      commentService,
 		OrganizationService: organizationService,
 		UserService:         userService,
 		Env:                 cfg.Server.Env,

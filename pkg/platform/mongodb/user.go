@@ -83,7 +83,7 @@ func (u userRepo) Create(ctx context.Context, data useradapter.RepoCreate) (doma
 		return domain.User{}, err
 	}
 	user := User{
-		ID:             uint64(newId),
+		ID:             newId,
 		Username:       data.Username,
 		Password:       data.Password,
 		Email:          data.Email,
@@ -101,7 +101,7 @@ func (u userRepo) Create(ctx context.Context, data useradapter.RepoCreate) (doma
 		return domain.User{}, err
 	}
 
-	newUser, err := u.Find(ctx, uint64(newId))
+	newUser, err := u.Find(ctx, newId)
 	if err != nil {
 		return domain.User{}, err
 	}

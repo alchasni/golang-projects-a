@@ -5,6 +5,25 @@ import (
 	"time"
 )
 
+func (c Comment) load(comment domain.Comment) Comment {
+	return Comment{
+		ID:             comment.ID,
+		Comment:        comment.Comment,
+		OrganizationId: comment.OrganizationId,
+		CreatedAt:      comment.CreatedAt,
+		UpdatedAt:      comment.UpdatedAt,
+	}
+}
+
+func (c Comment) domain() domain.Comment {
+	return domain.Comment{
+		ID:        c.ID,
+		Comment:   c.Comment,
+		CreatedAt: c.CreatedAt,
+		UpdatedAt: c.UpdatedAt,
+	}
+}
+
 func (o Organization) load(organization domain.Organization) Organization {
 	return Organization{
 		ID:        organization.ID,
