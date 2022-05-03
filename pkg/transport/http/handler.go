@@ -4,6 +4,7 @@ import (
 	"golang-projects-a/pkg/core/service"
 	"golang-projects-a/pkg/core/service/comment"
 	"golang-projects-a/pkg/core/service/organization"
+	"golang-projects-a/pkg/core/service/user"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -87,4 +88,53 @@ func (h HTTP) commentDeleteByOrg(c echo.Context) error {
 	}
 
 	return c.NoContent(http.StatusOK)
+}
+
+func (h HTTP) memberListByOrg(c echo.Context) error {
+	ctx := middleware.ContextID(c)
+
+	orgName := c.Param("name")
+	type User struct {
+		ID             uint64 `json:"id"`
+		Username       string `json:"username"`
+		Email          string `json:"email"`
+		AvatarUrl      string `json:"avatar_url"`
+		FollowingCount uint64 `json:"following_count"`
+		FollowerCount  uint64 `json:"follower_count"`
+	}
+	type Response struct {
+		Items    []User `json:"items"`
+		RowCount uint64 `json:"row_count"`
+	}
+
+	org, serviceErr := h.OrganizationService.FindByName(ctx, organization.FindByNameReq{Name: orgName})
+	if serviceErr != nil {
+		return serviceErr
+	}
+
+	serviceResp, serviceErr := h.UserService.GetList(ctx, user.GetListReq{
+		OrganizationId: org.ID,
+		Limit:          100,
+	})
+	if serviceErr != nil {
+		return serviceErr
+	}
+
+	return c.JSON(http.StatusOK, Response{
+		Items: func() []User {
+			items := make([]User, len(serviceResp.Items))
+			for index, item := range serviceResp.Items {
+				items[index] = User{
+					ID:             item.ID,
+					Username:       item.Username,
+					Email:          item.Email,
+					AvatarUrl:      item.AvatarUrl,
+					FollowingCount: item.FollowingCount,
+					FollowerCount:  item.FollowerCount,
+				}
+			}
+			return items
+		}(),
+		RowCount: serviceResp.RowCount,
+	})
 }

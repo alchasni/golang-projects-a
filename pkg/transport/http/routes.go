@@ -46,7 +46,7 @@ func (h HTTP) register() {
 	h.paths[pathKey_HandlerCreate] = apiV1.POST("/orgs/:name/comments", h.commentCreateByOrg).Path
 	h.paths[pathKey_HandlerList] = apiV1.GET("/orgs/:name/comments", h.commentListByOrg).Path
 	h.paths[pathKey_HandlerDelete] = apiV1.DELETE("/orgs/:name/comments", h.commentDeleteByOrg).Path
-	h.paths[pathKey_HandlerMember] = apiV1.GET("/orgs/:name/members", h.commentDeleteByOrg).Path
+	h.paths[pathKey_HandlerMember] = apiV1.GET("/orgs/:name/members", h.memberListByOrg).Path
 
 	// helper endpoint for populate and checking data
 	h.paths[pathKey_CommentCreate] = apiV1.POST("/comments", h.commentCreate).Path
