@@ -2,10 +2,10 @@ package mongodb
 
 import (
 	"context"
-	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/useradapter"
 	"golang-projects-a/pkg/core/domain"
 	"time"
@@ -113,10 +113,6 @@ func (u userRepo) Update(ctx context.Context, id uint64, data useradapter.RepoUp
 	selector := make(map[string]interface{})
 	selector["id"] = id
 	selector["deleted_at"] = GetSoftDeletedSelector(false)
-	println("XXXXX")
-	println(fmt.Sprintf("data.OrganizationId: %v", data.OrganizationId))
-	println(fmt.Sprintf("data.FollowingCount: %v", data.FollowingCount))
-	println(fmt.Sprintf("data.FollowerCount: %v", data.FollowerCount))
 	user := User{
 		Username:       data.Username,
 		Email:          data.Email,
@@ -133,7 +129,7 @@ func (u userRepo) Update(ctx context.Context, id uint64, data useradapter.RepoUp
 	}
 
 	if result.MatchedCount < 1 {
-		return domain.User{}, err
+		return domain.User{}, adapter.ErrNotFound
 	}
 
 	newUser, err := u.Find(ctx, id)
@@ -158,7 +154,7 @@ func (u userRepo) Delete(ctx context.Context, id uint64) (err error) {
 	}
 
 	if result.MatchedCount < 1 {
-		return err
+		return adapter.ErrNotFound
 	}
 
 	return nil

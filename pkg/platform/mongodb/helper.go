@@ -2,9 +2,9 @@ package mongodb
 
 import (
 	"context"
-	"errors"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"golang-projects-a/pkg/core/adapter"
 )
 
 type IdTracker struct {
@@ -70,7 +70,7 @@ func GetId(ctx context.Context, col *mongo.Collection) (uint, error) {
 			}
 			return idTracker.Seq, nil
 		} else {
-			return 0, errors.New("generate id failed")
+			return 0, adapter.ErrGenerateId
 		}
 	}
 }

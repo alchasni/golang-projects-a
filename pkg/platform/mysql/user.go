@@ -59,8 +59,8 @@ func (u userRepo) GetList(ctx context.Context, filter useradapter.RepoFilter) (d
 	return domain.Users{
 		Items: func() []domain.User {
 			items := make([]domain.User, len(user))
-			for index, roleModel := range user {
-				items[index] = roleModel.domain()
+			for index, userModel := range user {
+				items[index] = userModel.domain()
 			}
 			return items
 		}(),

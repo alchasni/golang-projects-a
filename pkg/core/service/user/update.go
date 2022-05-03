@@ -3,7 +3,6 @@ package user
 import (
 	"context"
 	"errors"
-	"fmt"
 	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/useradapter"
 	"golang-projects-a/pkg/core/adapter/validatoradapter"
@@ -59,10 +58,6 @@ func (s Service) Update(ctx context.Context, req UpdateReq) (resp UpdateResp, se
 		return resp, service.ErrInvalidInput(err.Error())
 	}
 
-	println("WWWW")
-	println(fmt.Sprintf("req.OrganizationId: %v", req.OrganizationId))
-	println(fmt.Sprintf("req.FollowingCount: %v", req.FollowingCount))
-	println(fmt.Sprintf("req.FollowerCount: %v", req.FollowerCount))
 	user, err := s.UserRepo.Update(ctx, req.id, useradapter.RepoUpdate{
 		Username:       req.Username,
 		Email:          req.Email,
@@ -73,9 +68,9 @@ func (s Service) Update(ctx context.Context, req UpdateReq) (resp UpdateResp, se
 	if err != nil {
 		switch {
 		case errors.Is(err, adapter.ErrNotFound):
-			return resp, service.ErrDatasourceAccess("role not found")
+			return resp, service.ErrDatasourceAccess("user not found")
 		default:
-			return resp, service.ErrDatasourceAccess("update role query error")
+			return resp, service.ErrDatasourceAccess("update user query error")
 		}
 	}
 

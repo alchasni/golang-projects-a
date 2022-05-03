@@ -55,7 +55,7 @@ func (s Service) GetList(ctx context.Context, req GetListReq) (resp GetListResp,
 		Offset: req.Offset,
 	})
 	if err != nil {
-		return resp, service.ErrDatasourceAccess("get list role query error")
+		return resp, service.ErrDatasourceAccess("get list organization query error")
 	}
 
 	return GetListResp{

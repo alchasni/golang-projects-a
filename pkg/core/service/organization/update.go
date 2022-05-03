@@ -51,20 +51,20 @@ func (s Service) Update(ctx context.Context, req UpdateReq) (resp UpdateResp, se
 		return resp, service.ErrInvalidInput(err.Error())
 	}
 
-	user, err := s.OrganizationRepo.Update(ctx, req.id, organizationadapter.RepoUpdate{
+	organization, err := s.OrganizationRepo.Update(ctx, req.id, organizationadapter.RepoUpdate{
 		Name: req.Name,
 	})
 	if err != nil {
 		switch {
 		case errors.Is(err, adapter.ErrNotFound):
-			return resp, service.ErrDatasourceAccess("role not found")
+			return resp, service.ErrDatasourceAccess("organization not found")
 		default:
-			return resp, service.ErrDatasourceAccess("update role query error")
+			return resp, service.ErrDatasourceAccess("update organization query error")
 		}
 	}
 
 	return UpdateResp{
-		ID:   user.ID,
-		Name: user.Name,
+		ID:   organization.ID,
+		Name: organization.Name,
 	}, nil
 }

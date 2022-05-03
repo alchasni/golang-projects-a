@@ -1,7 +1,6 @@
 package http
 
 import (
-	"fmt"
 	"golang-projects-a/pkg/core/service/user"
 	"net/http"
 
@@ -183,10 +182,6 @@ func (h HTTP) userUpdate(c echo.Context) error {
 		return service.ErrInvalidInput(err.Error())
 	}
 
-	println("VVVVV")
-	println(fmt.Sprintf("req.OrganizationId: %v", req.OrganizationId))
-	println(fmt.Sprintf("req.FollowingCount: %v", req.FollowingCount))
-	println(fmt.Sprintf("req.FollowerCount: %v", req.FollowerCount))
 	serviceResp, serviceErr := h.UserService.Update(ctx, user.UpdateReq{
 		ID:             c.Param("id"),
 		Email:          req.Email,

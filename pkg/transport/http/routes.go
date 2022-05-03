@@ -9,20 +9,19 @@ import (
 )
 
 const (
-	pathKey_Ping       = "ping"
-	pathKey_UserCreate = "user.create"
+	pathKey_Ping = "ping"
 
-	pathKey_PermissionFind    = "permission.find"
-	pathKey_PermissionGetList = "permission.get_list"
-	pathKey_PermissionCreate  = "permission.create"
-	pathKey_PermissionUpdate  = "permission.update"
-	pathKey_PermissionDelete  = "permission.delete"
+	pathKey_UserCreate  = "user.create"
+	pathKey_UserDelete  = "user.delete"
+	pathKey_UserFind    = "user.find"
+	pathKey_UserUpdate  = "user.update"
+	pathKey_UserGetList = "user.get_list"
 
-	pathKey_RoleFind    = "role.find"
-	pathKey_RoleGetList = "role.get_list"
-	pathKey_RoleCreate  = "role.create"
-	pathKey_RoleUpdate  = "role.update"
-	pathKey_RoleDelete  = "role.delete"
+	pathKey_OrganizationCreate  = "organization.create"
+	pathKey_OrganizationDelete  = "organization.delete"
+	pathKey_OrganizationFind    = "organization.find"
+	pathKey_OrganizationUpdate  = "organization.update"
+	pathKey_OrganizationGetList = "organization.get_list"
 )
 
 func (h HTTP) register() {
@@ -32,17 +31,17 @@ func (h HTTP) register() {
 
 	api := h.e.Group("/api", contextIDMiddleware)
 	apiV1 := api.Group("/v1")
-	h.paths[pathKey_UserCreate] = apiV1.POST("/orgs", h.organizationCreate).Path
-	h.paths[pathKey_UserCreate] = apiV1.DELETE("/orgs/:id", h.organizationDelete).Path
-	h.paths[pathKey_PermissionFind] = apiV1.GET("/orgs/:id", h.organizationFind).Path
-	h.paths[pathKey_PermissionUpdate] = apiV1.PUT("/orgs/:id", h.organizationUpdate).Path
-	h.paths[pathKey_PermissionGetList] = apiV1.GET("/orgs", h.organizationGetList).Path
+	h.paths[pathKey_OrganizationCreate] = apiV1.POST("/orgs", h.organizationCreate).Path
+	h.paths[pathKey_OrganizationDelete] = apiV1.DELETE("/orgs/:id", h.organizationDelete).Path
+	h.paths[pathKey_OrganizationFind] = apiV1.GET("/orgs/:id", h.organizationFind).Path
+	h.paths[pathKey_OrganizationUpdate] = apiV1.PUT("/orgs/:id", h.organizationUpdate).Path
+	h.paths[pathKey_OrganizationGetList] = apiV1.GET("/orgs", h.organizationGetList).Path
 
 	h.paths[pathKey_UserCreate] = apiV1.POST("/users", h.userCreate).Path
-	h.paths[pathKey_UserCreate] = apiV1.DELETE("/users/:id", h.userDelete).Path
-	h.paths[pathKey_PermissionFind] = apiV1.GET("/users/:id", h.userFind).Path
-	h.paths[pathKey_PermissionUpdate] = apiV1.PUT("/users/:id", h.userUpdate).Path
-	h.paths[pathKey_PermissionGetList] = apiV1.GET("/users", h.userGetList).Path
+	h.paths[pathKey_UserDelete] = apiV1.DELETE("/users/:id", h.userDelete).Path
+	h.paths[pathKey_UserFind] = apiV1.GET("/users/:id", h.userFind).Path
+	h.paths[pathKey_UserUpdate] = apiV1.PUT("/users/:id", h.userUpdate).Path
+	h.paths[pathKey_UserGetList] = apiV1.GET("/users", h.userGetList).Path
 
 	//h.paths[pathKey_PermissionFind] = apiV1.GET("/permissions/:id", h.permissionFind).Path
 	//h.paths[pathKey_PermissionGetList] = apiV1.GET("/permissions", h.permissionGetList).Path
