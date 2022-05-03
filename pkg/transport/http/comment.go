@@ -40,14 +40,14 @@ func (h HTTP) commentGetList(c echo.Context) error {
 		Limit  int `query:"limit"`
 		Offset int `query:"offset"`
 	}
-	type User struct {
+	type Comment struct {
 		ID             uint64 `json:"id"`
 		Comment        string `json:"comment"`
 		OrganizationId uint64 `json:"organization_id"`
 	}
 	type Response struct {
-		Items    []User `json:"items"`
-		RowCount uint64 `json:"row_count"`
+		Items    []Comment `json:"items"`
+		RowCount uint64    `json:"row_count"`
 	}
 
 	req := Request{}
@@ -66,10 +66,10 @@ func (h HTTP) commentGetList(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, Response{
-		Items: func() []User {
-			items := make([]User, len(serviceResp.Items))
+		Items: func() []Comment {
+			items := make([]Comment, len(serviceResp.Items))
 			for index, item := range serviceResp.Items {
-				items[index] = User{
+				items[index] = Comment{
 					ID:             item.ID,
 					Comment:        item.Comment,
 					OrganizationId: item.OrganizationId,

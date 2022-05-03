@@ -11,6 +11,7 @@ import (
 const (
 	pathKey_Ping          = "ping"
 	pathKey_HandlerCreate = "handler.create"
+	pathKey_HandlerList   = "handler.list"
 
 	pathKey_CommentCreate  = "comment.create"
 	pathKey_CommentDelete  = "comment.delete"
@@ -41,6 +42,7 @@ func (h HTTP) register() {
 
 	// main endpoint
 	h.paths[pathKey_HandlerCreate] = apiV1.POST("/orgs/:name/comments", h.commentCreateByOrg).Path
+	h.paths[pathKey_HandlerList] = apiV1.GET("/orgs/:name/comments", h.commentListByOrg).Path
 
 	// helper endpoint for populate and checking data
 	h.paths[pathKey_CommentCreate] = apiV1.POST("/comments", h.commentCreate).Path

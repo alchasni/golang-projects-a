@@ -37,3 +37,34 @@ func (h HTTP) commentCreateByOrg(c echo.Context) error {
 
 	return c.NoContent(http.StatusOK)
 }
+
+func (h HTTP) commentListByOrg(c echo.Context) error {
+	ctx := middleware.ContextID(c)
+
+	orgName := c.Param("name")
+
+	org, serviceErr := h.OrganizationService.FindByName(ctx, organization.FindByNameReq{Name: orgName})
+	if serviceErr != nil {
+		return serviceErr
+	}
+	type Response struct {
+		Comments []string `json:"comments"`
+	}
+
+	serviceResp, serviceErr := h.CommentService.GetList(ctx, comment.GetListReq{
+		OrganizationId: org.ID,
+	})
+	if serviceErr != nil {
+		return serviceErr
+	}
+
+	return c.JSON(http.StatusOK, Response{
+		Comments: func() []string {
+			comments := make([]string, len(serviceResp.Items))
+			for index, item := range serviceResp.Items {
+				comments[index] = item.Comment
+			}
+			return comments
+		}(),
+	})
+}

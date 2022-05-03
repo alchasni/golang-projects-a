@@ -38,13 +38,13 @@ func (h HTTP) organizationGetList(c echo.Context) error {
 		Limit  int `query:"limit"`
 		Offset int `query:"offset"`
 	}
-	type User struct {
+	type Organization struct {
 		ID   uint64 `json:"id"`
 		Name string `json:"name"`
 	}
 	type Response struct {
-		Items    []User `json:"items"`
-		RowCount uint64 `json:"row_count"`
+		Items    []Organization `json:"items"`
+		RowCount uint64         `json:"row_count"`
 	}
 
 	req := Request{}
@@ -63,10 +63,10 @@ func (h HTTP) organizationGetList(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, Response{
-		Items: func() []User {
-			items := make([]User, len(serviceResp.Items))
+		Items: func() []Organization {
+			items := make([]Organization, len(serviceResp.Items))
 			for index, item := range serviceResp.Items {
-				items[index] = User{
+				items[index] = Organization{
 					ID:   item.ID,
 					Name: item.Name,
 				}
