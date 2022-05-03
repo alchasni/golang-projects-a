@@ -116,3 +116,11 @@ func (s Service) createUserIndex(col *mongo.Collection) {
 		os.Exit(1)
 	}
 }
+
+func (s Service) Drop(ctx context.Context) {
+	err := s.db.Drop(ctx)
+	if err != nil {
+		fmt.Println("drop DB ERROR:", err)
+		os.Exit(1)
+	}
+}
