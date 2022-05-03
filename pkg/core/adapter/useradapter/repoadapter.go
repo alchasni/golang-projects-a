@@ -1,4 +1,4 @@
-//go:generate mockgen -destination=../../../mocks/adapter/useradapter/repoadapter.go github.com/alchasni/golang-projects-a/pkg/core/adapter/useradapter RepoAdapter
+//go:generate mockgen -destination=../../../mocks/adapter/useradapter/repoadapter.go golang-projects-a/pkg/core/adapter/useradapter RepoAdapter
 
 package useradapter
 

@@ -1,4 +1,4 @@
-//go:generate mockgen -destination=../../../mocks/adapter/organizationadapter/repoadapter.go github.com/alchasni/golang-projects-a/pkg/core/adapter/organizationadapter RepoAdapter
+//go:generate mockgen -destination=../../../mocks/adapter/organizationadapter/repoadapter.go golang-projects-a/pkg/core/adapter/organizationadapter RepoAdapter
 
 package organizationadapter
 

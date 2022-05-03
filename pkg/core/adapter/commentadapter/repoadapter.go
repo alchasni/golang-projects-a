@@ -1,4 +1,4 @@
-//go:generate mockgen -destination=../../../mocks/adapter/commentadapter/repoadapter.go github.com/alchasni/golang-projects-a/pkg/core/adapter/commentadapter RepoAdapter
+//go:generate mockgen -destination=../../../mocks/adapter/commentadapter/repoadapter.go golang-projects-a/pkg/core/adapter/commentadapter RepoAdapter
 
 package commentadapter
 
