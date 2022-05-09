@@ -12,11 +12,6 @@ import (
 	"golang-projects-a/pkg/transport/http"
 )
 
-const (
-	MYSQL   = "mysql"
-	MONGODB = "mongodb"
-)
-
 func main() {
 	v := validator.New()
 
@@ -28,19 +23,10 @@ func main() {
 		panic(fmt.Errorf("error parsing config. %w", err))
 	}
 
-	//mysqlDB, err := mysql.New(cfg.Datasource.MySQL)
-	//if err != nil {
-	//	panic(fmt.Errorf("error mysql initialization. %w", err))
-	//}
-
 	mongoDB, err := mongodb.New(cfg.Datasource.MongoDB)
 	if err != nil {
 		panic(fmt.Errorf("error mongodb initialization. %w", err))
 	}
-
-	//if cfg.Datasource.UsedDB == MONGODB {
-	//
-	//}
 
 	commentService := comment.Service{
 		CommentRepo: mongoDB.CommentRepo(),

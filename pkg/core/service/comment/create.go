@@ -2,8 +2,6 @@ package comment
 
 import (
 	"context"
-	"errors"
-	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/commentadapter"
 	"golang-projects-a/pkg/core/adapter/validatoradapter"
 	"golang-projects-a/pkg/core/service"
@@ -52,12 +50,7 @@ func (s Service) Create(ctx context.Context, req CreateReq) (resp CreateResp, se
 		OrganizationId: req.OrganizationId,
 	})
 	if err != nil {
-		switch {
-		case errors.Is(err, adapter.ErrDuplicate):
-			return resp, service.ErrDatasourceAccess("duplicate comment code")
-		default:
-			return resp, service.ErrDatasourceAccess("create comment query error")
-		}
+		return resp, service.ErrDatasourceAccess("create comment query error")
 	}
 
 	return CreateResp{

@@ -39,22 +39,20 @@ API Blueprints:
 ### Prerequisite
 
 1. Golang 1.17
-2. MongoDB
-3. Docker-Compose
+2. Docker-Compose
 
 ### Setup and Development Guide
 
 1. install required dependencies
-2. Run
-```bash
-  go mod
-  go mod tidy
-```
 
 ### Start
-1. Run MongoDB (using docker-compose is recommended) in 127.0.0.1::27017
-2. Run
+1. Run
 ```bash
-  go run cmd/api/main.go
+  make all
 ```
-3. program will run in http://localhost:8080/
+
+### Run test
+1. Run
+```bash
+  go test ./... -v
+```

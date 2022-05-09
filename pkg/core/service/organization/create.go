@@ -19,7 +19,7 @@ type CreateResp struct {
 }
 
 var (
-	validatorTag_CreateReqName = validatoradapter.Tag().Required()
+	validatorTag_CreateReqName = validatoradapter.Tag().AlphaNum().Required()
 )
 
 func (req *CreateReq) validate(v validatoradapter.Adapter) error {
@@ -49,7 +49,7 @@ func (s Service) Create(ctx context.Context, req CreateReq) (resp CreateResp, se
 	if err != nil {
 		switch {
 		case errors.Is(err, adapter.ErrDuplicate):
-			return resp, service.ErrDatasourceAccess("duplicate organization code")
+			return resp, service.ErrDatasourceAccess("duplicate organization name")
 		default:
 			return resp, service.ErrDatasourceAccess("create organization query error")
 		}

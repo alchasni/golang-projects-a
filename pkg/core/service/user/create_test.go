@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"crypto/md5"
+	"fmt"
 	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/useradapter"
 	"golang-projects-a/pkg/core/domain"
@@ -29,17 +31,19 @@ func TestService_Create(t *testing.T) {
 	t.Run("happy flow", func(t *testing.T) {
 		req := CreateReq{
 			Username:       "Username",
-			Email:          "Email",
+			Email:          "Email@email.com",
 			Password:       "Password",
 			AvatarUrl:      "AvatarUrl",
 			OrganizationId: 99,
 			FollowingCount: 99,
 			FollowerCount:  99,
 		}
+		data := []byte("Password")
+		password := fmt.Sprintf("%x", md5.Sum(data))
 		repoCreate := useradapter.RepoCreate{
 			Username:       req.Username,
 			Email:          req.Email,
-			Password:       req.Password,
+			Password:       password,
 			AvatarUrl:      req.AvatarUrl,
 			OrganizationId: req.OrganizationId,
 			FollowingCount: req.FollowingCount,
@@ -48,7 +52,7 @@ func TestService_Create(t *testing.T) {
 		user := domain.User{
 			ID:             1,
 			Username:       "Username",
-			Email:          "Email",
+			Email:          "Email@email.com",
 			Password:       "Password",
 			AvatarUrl:      "AvatarUrl",
 			OrganizationId: 99,
@@ -73,7 +77,7 @@ func TestService_Create(t *testing.T) {
 
 	t.Run("should return invalid input username required", func(t *testing.T) {
 		req := CreateReq{
-			Email:          "Email",
+			Email:          "Email@email.com",
 			Password:       "Password",
 			AvatarUrl:      "AvatarUrl",
 			OrganizationId: 99,
@@ -106,7 +110,7 @@ func TestService_Create(t *testing.T) {
 	t.Run("should return invalid input password required", func(t *testing.T) {
 		req := CreateReq{
 			Username:       "Username",
-			Email:          "Email",
+			Email:          "Email@email.com",
 			AvatarUrl:      "AvatarUrl",
 			OrganizationId: 99,
 			FollowingCount: 99,
@@ -122,7 +126,7 @@ func TestService_Create(t *testing.T) {
 	t.Run("should return invalid input avatar_url required", func(t *testing.T) {
 		req := CreateReq{
 			Username:       "Username",
-			Email:          "Email",
+			Email:          "Email@email.com",
 			Password:       "Password",
 			OrganizationId: 99,
 			FollowingCount: 99,
@@ -138,7 +142,7 @@ func TestService_Create(t *testing.T) {
 	t.Run("should return invalid input organization_id required", func(t *testing.T) {
 		req := CreateReq{
 			Username:       "Username",
-			Email:          "Email",
+			Email:          "Email@email.com",
 			Password:       "Password",
 			AvatarUrl:      "AvatarUrl",
 			FollowingCount: 99,
@@ -154,17 +158,19 @@ func TestService_Create(t *testing.T) {
 	t.Run("should return create query error", func(t *testing.T) {
 		req := CreateReq{
 			Username:       "Username",
-			Email:          "Email",
+			Email:          "Email@email.com",
 			Password:       "Password",
 			AvatarUrl:      "AvatarUrl",
 			OrganizationId: 99,
 			FollowingCount: 99,
 			FollowerCount:  99,
 		}
+		data := []byte("Password")
+		password := fmt.Sprintf("%x", md5.Sum(data))
 		repoCreate := useradapter.RepoCreate{
 			Username:       req.Username,
 			Email:          req.Email,
-			Password:       req.Password,
+			Password:       password,
 			AvatarUrl:      req.AvatarUrl,
 			OrganizationId: req.OrganizationId,
 			FollowingCount: req.FollowingCount,

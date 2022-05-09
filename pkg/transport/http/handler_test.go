@@ -316,7 +316,7 @@ func Test_memberListByOrg(t *testing.T) {
 			OrgName:      "name",
 			CreateOrg:    true,
 			CreateMember: true,
-			Result:       `{"items":[{"id":1,"username":"name1","email":"email1","avatar_url":"avatarUrl1","following_count":5,"follower_count":5},{"id":2,"username":"name2","email":"email2","avatar_url":"avatarUrl2","following_count":10,"follower_count":10}],"row_count":2}` + "\n",
+			Result:       `{"items":[{"id":1,"username":"name1","email":"email1@gmail.com","avatar_url":"avatarUrl1","following_count":5,"follower_count":5},{"id":2,"username":"name2","email":"email2@gmail.com","avatar_url":"avatarUrl2","following_count":10,"follower_count":10}],"row_count":2}` + "\n",
 			Error:        "",
 		},
 	}
@@ -340,7 +340,7 @@ func Test_memberListByOrg(t *testing.T) {
 			if tt.CreateMember {
 				_, _ = h.UserService.Create(context.Background(), user.CreateReq{
 					Username:       "name1",
-					Email:          "email1",
+					Email:          "email1@gmail.com",
 					Password:       "pwd1",
 					AvatarUrl:      "avatarUrl1",
 					OrganizationId: 1,
@@ -349,7 +349,7 @@ func Test_memberListByOrg(t *testing.T) {
 				})
 				_, _ = h.UserService.Create(context.Background(), user.CreateReq{
 					Username:       "name2",
-					Email:          "email2",
+					Email:          "email2@gmail.com",
 					Password:       "pwd2",
 					AvatarUrl:      "avatarUrl2",
 					OrganizationId: 1,

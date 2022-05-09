@@ -2,10 +2,10 @@ package user
 
 import (
 	"context"
-	"errors"
+	"crypto/md5"
+	"fmt"
 	"golang-projects-a/pkg/core/adapter/useradapter"
 
-	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/validatoradapter"
 	"golang-projects-a/pkg/core/service"
 )
@@ -32,7 +32,7 @@ type CreateResp struct {
 
 var (
 	validatorTag_CreateReqUsername       = validatoradapter.Tag().Required()
-	validatorTag_CreateReqEmail          = validatoradapter.Tag().Required()
+	validatorTag_CreateReqEmail          = validatoradapter.Tag().Required().Email()
 	validatorTag_CreateReqPassword       = validatoradapter.Tag().Required()
 	validatorTag_CreateReqAvatarUrl      = validatoradapter.Tag().Required()
 	validatorTag_CreateReqOrganizationId = validatoradapter.Tag().Required().Numeric()
@@ -67,22 +67,20 @@ func (s Service) Create(ctx context.Context, req CreateReq) (resp CreateResp, se
 		return resp, service.ErrInvalidInput(err.Error())
 	}
 
+	data := []byte(req.Password)
+	password := fmt.Sprintf("%x", md5.Sum(data))
+
 	user, err := s.UserRepo.Create(ctx, useradapter.RepoCreate{
 		Username:       req.Username,
 		Email:          req.Email,
-		Password:       req.Password,
+		Password:       password,
 		AvatarUrl:      req.AvatarUrl,
 		OrganizationId: req.OrganizationId,
 		FollowingCount: req.FollowingCount,
 		FollowerCount:  req.FollowerCount,
 	})
 	if err != nil {
-		switch {
-		case errors.Is(err, adapter.ErrDuplicate):
-			return resp, service.ErrDatasourceAccess("duplicate user code")
-		default:
-			return resp, service.ErrDatasourceAccess("create user query error")
-		}
+		return resp, service.ErrDatasourceAccess("create user query error")
 	}
 
 	return CreateResp{

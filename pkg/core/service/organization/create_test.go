@@ -53,7 +53,7 @@ func TestService_Create(t *testing.T) {
 		resp, e := svc.Create(context.Background(), req)
 		assert.Equal(t, CreateResp{}, resp)
 		assert.Equal(t, service.ErrorCode_InvalidInput, e.Code())
-		assert.Equal(t, "invalid input on name, this field is required", e.Error())
+		assert.Equal(t, "invalid input on name, this field should only contains alphanumeric value", e.Error())
 	})
 
 	t.Run("should return create query error", func(t *testing.T) {
@@ -71,4 +71,21 @@ func TestService_Create(t *testing.T) {
 		assert.Equal(t, service.ErrorCode_DatasourceAccess, e.Code())
 		assert.Equal(t, "create organization query error", e.Error())
 	})
+
+	t.Run("should return duplicate error", func(t *testing.T) {
+		req := CreateReq{
+			Name: "Name",
+		}
+		repoCreate := organizationadapter.RepoCreate{
+			Name: req.Name,
+		}
+
+		organizationRepo.EXPECT().Create(gomock.Any(), repoCreate).Return(domain.Organization{}, adapter.ErrDuplicate)
+
+		resp, e := svc.Create(context.Background(), req)
+		assert.Equal(t, CreateResp{}, resp)
+		assert.Equal(t, service.ErrorCode_DatasourceAccess, e.Code())
+		assert.Equal(t, "duplicate organization name", e.Error())
+	})
+
 }
