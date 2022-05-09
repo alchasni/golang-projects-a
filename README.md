@@ -26,11 +26,13 @@
 
 Database Design
 
-![Link](https://lh3.googleusercontent.com/fife/AAWUweWVOOqlTT6mTrk4SMv2apq56-MVDLOwLB6liCMVgdXuwJBKasNS_Vf04iQLx9zRkUAke4p9kdS0S1dcO9LvmsmBXBCxJLV-0pLVnNXbkZsSG0rlWWVAJ0Sz0Ufw2D8qMyfmCH-NeGvHBIfdSKXTNiVgaRpd9CDOtSGucBg_vg0HZX5wURhjnQxnEc30F1VUpcfbOQN-e7kM3fSLVYGkf6FbUEmBc1Gf9kKa796cBE5SSovG1p7RHj-IeAlriQ66BROfTz05m56ETLzrD480qPUEuXAK-Pq1zE5LIT5-XZsdY_VJ-C8BOu_N186WsP2hzqVFAGmNoa0IECS3AZDxLoqiDPGhYf3nYWA-LcAo2tKUIEAqRL4ZVcoCEAcJ5Bp3D945i70BZEifNfQm3vSSUi28IrTsGvOxW6LOEbwcaMrRogMpXgwDCYurVuw4kvyi9fp2qVTgshu2ixRDFUdRl1C36EeG5qagJRNtje1xVi1GUvzsV5Ck3jkVC0cPmYm22fl1MDmK-v0gZZNIlEcqjl1v_qZ0YgSImkZE9StEZYNg3biEZkSaR_2W605y-0PycLYZ4aVLeh3Hea15yp9wopAIDXKgNxK_ZWZfoZSavJGYQtJPU6feuvKctAD2koIs67j7uDQb0nsaQdBeRvqRY7-dnV6c5-Da4OxQh3kXkhogZbbB3l6DqVJnvueznfIL1n9E3Wht75hkKfOL6yY5scnGTeTJG6CiAdavDmCTZ88hnGUNLoWfbBOQKrWUsmTwvQZP8kKfEEcVEsR-2H84ZQK4rviHEUZ8ATdBli3VdjsYBIx70X0z8uhF=w1366-h663)
+![Link](https://drive.google.com/uc?id=1TQ7nMonP0iwiG7qKoXu1t_trMl6ajrfh)
 
 API Blueprints:
 
-- [Link]()
+- [Comment APIs](https://documenter.getpostman.com/view/20770802/UyxdMVgk)
+- [Organization APIs](https://documenter.getpostman.com/view/20770802/UyxdMps9)
+- [User APIs](https://documenter.getpostman.com/view/20770802/UyxdMpsA)
 
 ## Setup
 
