@@ -1,0 +1,17 @@
+server:
+  env: test
+  http:
+    port: :8080
+    debug: true
+    read_timeout_seconds: 10
+    write_timeout_seconds: 35
+    base_url: http://localhost:8080
+
+datasource:
+  mongodb:
+    db:
+      user: root
+      pass: rootpw
+      host: mongo
+      port: 27017
+      db: maindb
