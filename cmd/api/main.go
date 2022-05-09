@@ -35,7 +35,7 @@ func main() {
 
 	mongoDB, err := mongodb.New(cfg.Datasource.MongoDB)
 	if err != nil {
-		panic(fmt.Errorf("error mysql initialization. %w", err))
+		panic(fmt.Errorf("error mongodb initialization. %w", err))
 	}
 
 	//if cfg.Datasource.UsedDB == MONGODB {
