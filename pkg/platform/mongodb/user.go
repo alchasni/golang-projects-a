@@ -4,7 +4,7 @@ import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"golang-projects-a/pkg/core/adapter"
 	"golang-projects-a/pkg/core/adapter/useradapter"
 	"golang-projects-a/pkg/core/domain"
 	"time"
@@ -32,10 +32,11 @@ func (u userRepo) Find(ctx context.Context, id uint64) (domain.User, error) {
 func (u userRepo) GetList(ctx context.Context, filter useradapter.RepoFilter) (domain.Users, error) {
 	var res domain.Users
 
-	selector, option, err := u.buildSelectorFind(filter)
+	selector, err := u.buildSelectorFind(filter)
 	if err != nil {
 		return res, err
 	}
+	option := GetFindOption(filter.Limit, filter.Offset)
 
 	cur, err := u.col.Find(ctx, selector, option)
 	if err != nil {
@@ -56,21 +57,20 @@ func (u userRepo) GetList(ctx context.Context, filter useradapter.RepoFilter) (d
 	return res, nil
 }
 
-func (u userRepo) buildSelectorFind(filter useradapter.RepoFilter) (map[string]interface{}, *options.FindOptions, error) {
+func (u userRepo) buildSelectorFind(filter useradapter.RepoFilter) (map[string]interface{}, error) {
 	selector := make(map[string]interface{})
-	option := options.Find()
 
 	BuildSelectorUint64(selector, "id", filter.ID)
 	BuildSelectorString(selector, "username", filter.Username)
 	BuildSelectorString(selector, "email", filter.Email)
 	BuildSelectorString(selector, "password", filter.Password)
 	BuildSelectorString(selector, "avatar_url", filter.AvatarUrl)
+	BuildSelectorUint64(selector, "organization_id", filter.OrganizationId)
+	BuildSelectorUint64(selector, "following_count", filter.FollowingCount)
+	BuildSelectorUint64(selector, "follower_count", filter.FollowerCount)
 	selector["deleted_at"] = GetSoftDeletedSelector(false)
 
-	option.Limit = GetLimit(filter.Limit)
-	option.Skip = GetSkip(filter.Offset)
-
-	return selector, option, nil
+	return selector, nil
 }
 
 func (u userRepo) Create(ctx context.Context, data useradapter.RepoCreate) (domain.User, error) {
@@ -79,13 +79,17 @@ func (u userRepo) Create(ctx context.Context, data useradapter.RepoCreate) (doma
 		return domain.User{}, err
 	}
 	user := User{
-		ID:        uint64(newId),
-		Username:  data.Username,
-		Password:  data.Password,
-		Email:     data.Email,
-		AvatarUrl: data.AvatarUrl,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		ID:             newId,
+		Username:       data.Username,
+		Password:       data.Password,
+		Email:          data.Email,
+		AvatarUrl:      data.AvatarUrl,
+		OrganizationId: data.OrganizationId,
+		FollowingCount: data.FollowingCount,
+		FollowerCount:  data.FollowerCount,
+		CreatedAt:      time.Now(),
+		UpdatedAt:      time.Now(),
+		DeletedAt:      time.Time{},
 	}
 
 	_, err = u.col.InsertOne(ctx, user)
@@ -93,7 +97,7 @@ func (u userRepo) Create(ctx context.Context, data useradapter.RepoCreate) (doma
 		return domain.User{}, err
 	}
 
-	newUser, err := u.Find(ctx, uint64(newId))
+	newUser, err := u.Find(ctx, newId)
 	if err != nil {
 		return domain.User{}, err
 	}
@@ -106,9 +110,13 @@ func (u userRepo) Update(ctx context.Context, id uint64, data useradapter.RepoUp
 	selector["id"] = id
 	selector["deleted_at"] = GetSoftDeletedSelector(false)
 	user := User{
-		Username:  data.Username,
-		Email:     data.Email,
-		UpdatedAt: time.Now(),
+		Username:       data.Username,
+		Email:          data.Email,
+		OrganizationId: data.OrganizationId,
+		FollowingCount: data.FollowingCount,
+		FollowerCount:  data.FollowerCount,
+		CreatedAt:      time.Time{},
+		UpdatedAt:      time.Now(),
 	}
 
 	result, err := u.col.UpdateOne(ctx, selector, bson.M{"$set": user})
@@ -117,7 +125,7 @@ func (u userRepo) Update(ctx context.Context, id uint64, data useradapter.RepoUp
 	}
 
 	if result.MatchedCount < 1 {
-		return domain.User{}, err
+		return domain.User{}, adapter.ErrNotFound
 	}
 
 	newUser, err := u.Find(ctx, id)
@@ -142,7 +150,7 @@ func (u userRepo) Delete(ctx context.Context, id uint64) (err error) {
 	}
 
 	if result.MatchedCount < 1 {
-		return err
+		return adapter.ErrNotFound
 	}
 
 	return nil

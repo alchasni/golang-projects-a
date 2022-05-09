@@ -4,5 +4,7 @@ const (
 	MaxLimit     = 100
 	DefaultLimit = 10
 
-	UserCollection = "users"
+	CommentCollection      = "comment"
+	OrganizationCollection = "organizations"
+	UserCollection         = "users"
 )

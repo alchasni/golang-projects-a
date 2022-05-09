@@ -1,4 +1,4 @@
-//go:generate mockgen -destination=../../../mocks/adapter/useradapter/repoadapter.go github.com/alchasni/golang-projects-a/pkg/core/adapter/useradapter RepoAdapter
+//go:generate mockgen -destination=../../../mocks/adapter/useradapter/repoadapter.go golang-projects-a/pkg/core/adapter/useradapter RepoAdapter
 
 package useradapter
 
@@ -18,24 +18,33 @@ type RepoAdapter interface {
 }
 
 type RepoFilter struct {
-	ID        uint64
-	Username  string
-	Email     string
-	Password  string
-	AvatarUrl string
+	ID             uint64
+	Username       string
+	Email          string
+	Password       string
+	AvatarUrl      string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 
-	Limit  int
-	Offset int
+	Limit  int64
+	Offset int64
 }
 
 type RepoCreate struct {
-	Username  string
-	Email     string
-	Password  string
-	AvatarUrl string
+	Username       string
+	Email          string
+	Password       string
+	AvatarUrl      string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 }
 
 type RepoUpdate struct {
-	Username string
-	Email    string
+	Username       string
+	Email          string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 }

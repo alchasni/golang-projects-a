@@ -10,14 +10,17 @@ import (
 )
 
 type GetListReq struct {
-	ID        uint64
-	Username  string
-	Email     string
-	Password  string
-	AvatarUrl string
+	ID             uint64
+	Username       string
+	Email          string
+	Password       string
+	AvatarUrl      string
+	OrganizationId uint64
+	FollowingCount uint64
+	FollowerCount  uint64
 
-	Limit  int
-	Offset int
+	Limit  int64
+	Offset int64
 }
 
 type GetListResp struct {
@@ -53,16 +56,19 @@ func (s Service) GetList(ctx context.Context, req GetListReq) (resp GetListResp,
 	}
 
 	user, err := s.UserRepo.GetList(ctx, useradapter.RepoFilter{
-		ID:        req.ID,
-		Username:  req.Username,
-		Email:     req.Email,
-		Password:  req.Password,
-		AvatarUrl: req.AvatarUrl,
-		Limit:     req.Limit,
-		Offset:    req.Offset,
+		ID:             req.ID,
+		Username:       req.Username,
+		Email:          req.Email,
+		Password:       req.Password,
+		AvatarUrl:      req.AvatarUrl,
+		OrganizationId: req.OrganizationId,
+		FollowingCount: req.FollowingCount,
+		FollowerCount:  req.FollowerCount,
+		Limit:          req.Limit,
+		Offset:         req.Offset,
 	})
 	if err != nil {
-		return resp, service.ErrDatasourceAccess("get list role query error")
+		return resp, service.ErrDatasourceAccess("get list user query error")
 	}
 
 	return GetListResp{
